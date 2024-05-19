@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     const something = async() =>{
       try{
-      const respone:AxiosResponse =  (await axios.get("http://localhost:3000/getSomething"))
+      const respone:AxiosResponse =  (await axios.get("http://localhost:3000/users/allUsers"))
       const responeData:number= respone.data
       console.log(responeData)
       setCount(responeData)
