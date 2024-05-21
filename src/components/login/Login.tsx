@@ -5,7 +5,7 @@ function Login() {
   const handleSuccess = async (response: any) => {
     console.log("Login Success:", response.credential);
     // Send the token to the backend server
-    await axios
+    axios
       .post("http://localhost:3000/users/google-signIn", {
         token: response.credential,
       })
