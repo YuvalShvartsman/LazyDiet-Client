@@ -4,9 +4,7 @@ import "./App.css";
 import axios, { AxiosResponse } from "axios";
 import Login from "./components/login/Login";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-
-const clientId =
-  "828545353398-jhc8gosa7j782nj35cd1vtaieqkfjusi.apps.googleusercontent.com";
+import { Routes, Route, Router, BrowserRouter } from "react-router-dom";
 
 function App() {
   // const [count, setCount] = useState(0)
@@ -27,9 +25,11 @@ function App() {
   // }, [])
 
   return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <Login />
-    </GoogleOAuthProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
