@@ -1,3 +1,5 @@
+import "./Login.css";
+
 import { useContext } from "react";
 
 import {
@@ -39,10 +41,14 @@ function Login() {
 
   return (
     <GoogleOAuthProvider clientId="828545353398-jhc8gosa7j782nj35cd1vtaieqkfjusi.apps.googleusercontent.com">
-      <div>
+      <div className="Login-Screen">
         <h2>Login with Google</h2>
-        <GoogleLogin onSuccess={handleSuccess} onError={() => handleFailure} />
-        <h1>{user ? <p>Welcome, {user.name}</p> : <p>nothing</p>}</h1>
+        <GoogleLogin
+          onSuccess={handleSuccess}
+          onError={() => handleFailure}
+          theme="filled_black"
+          shape="circle"
+        />
       </div>
     </GoogleOAuthProvider>
   );
