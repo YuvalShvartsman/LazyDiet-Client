@@ -8,6 +8,11 @@
     background-color: #74C69D;
     box-shadow: #74C69D 5px 5px, #95D5B2 10px 10px, #B7E4C7 15px 15px, #D8F3DC 20px 20px  25px 25px;    border-radius: 5%;
     }
+
+.Login-Logo{
+    height: 100px;
+    width: 100px;
+}
     
 
 .colorScheme{

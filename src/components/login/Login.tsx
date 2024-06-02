@@ -15,6 +15,8 @@ import { URLS } from "../../axiosConfig/URLS";
 
 import UserContext from "../../contexts/UserContext";
 
+import Logo from "../../../public/avocado.png";
+
 function Login() {
   const userContext = useContext(UserContext);
 
@@ -42,6 +44,7 @@ function Login() {
   return (
     <GoogleOAuthProvider clientId="828545353398-jhc8gosa7j782nj35cd1vtaieqkfjusi.apps.googleusercontent.com">
       <div className="Login-Screen">
+        <img src={Logo} className="Login-Logo" />
         <h2>Login with Google</h2>
         <GoogleLogin
           onSuccess={handleSuccess}
