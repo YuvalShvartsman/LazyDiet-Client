@@ -15,24 +15,39 @@ import { URLS } from "../../axiosConfig/URLS";
 
 import UserContext from "../../contexts/UserContext";
 
-import Logo from "../../../public/avocado.png";
+import Logo from "/avocado.png";
+import { useNavigate } from "react-router-dom";
+
+import Swal from "sweetalert2";
+
+type SignInRes = {
+  user: User;
+  token: string;
+};
 
 function Login() {
+  const navigate = useNavigate();
   const userContext = useContext(UserContext);
 
   if (!userContext) {
     throw new Error("useContext must be used within a UserProvider");
   }
 
-  const { user, updateUser } = userContext;
+  const { updateUser } = userContext;
 
   const handleSuccess = async (response: GoogleCredentialResponse) => {
     try {
-      const res = await db.post<{ user: User; token: string }>(URLS.SIGN_IN, {
+      const res = await db.post<SignInRes>(URLS.SIGN_IN, {
         token: response.credential,
       });
       updateUser(res.data.token);
+      navigate("/");
     } catch (error) {
+      Swal.fire({
+        title: "System Error",
+        text: "There was an error with your Login",
+        icon: "error",
+      });
       console.error("Error sending token to server:", error);
     }
   };
