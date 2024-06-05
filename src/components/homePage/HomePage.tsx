@@ -4,18 +4,23 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import UserContext from "../../contexts/UserContext";
+import UserPreferencesContext from "../../contexts/UserPreferencesContext";
 
 function HomePage() {
-  const userContext = useContext(UserContext);
+  const navigate = useNavigate();
 
-  if (!userContext) {
+  const userContext = useContext(UserContext);
+  const userPreferencesContext = useContext(UserPreferencesContext);
+
+  if (!userContext || !userPreferencesContext) {
     throw new Error("useContext must be used within a UserProvider");
   }
   const { user } = userContext;
-  const navigate = useNavigate();
+  const { userPreferences } = userPreferencesContext;
 
   useEffect(() => {
     if (!user) navigate("/login");
+    else if (!userPreferences) navigate("/userPreferences");
   }, []);
 
   return (

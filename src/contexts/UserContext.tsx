@@ -9,16 +9,16 @@ type DecodedToken = {
   userId: string;
 };
 
-interface UserContextProps {
+type UserContextProps = {
   user: User | null;
   updateUser: (token: string) => void;
-}
+};
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
-interface UserProviderProps {
+type UserProviderProps = {
   children: ReactNode;
-}
+};
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
