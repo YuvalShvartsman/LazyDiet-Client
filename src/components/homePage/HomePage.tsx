@@ -21,7 +21,7 @@ function HomePage() {
   useEffect(() => {
     if (!user) navigate("/login");
     else if (!userPreferences) navigate("/userPreferences");
-  }, []);
+  }, [userContext, userPreferencesContext]);
 
   return (
     <div className="Home-Page">

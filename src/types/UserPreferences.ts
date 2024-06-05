@@ -4,7 +4,7 @@ type Diet = "keto" | "Vegan" | "Vegetarian";
 
 type Sensitivities = "lactose" | "gluten" | "nuts";
 
-export type UserPreferences = {
+export type UserPreferencesType = {
   weight: number;
   height: number;
   age: number;

@@ -1,6 +1,6 @@
 import "./Login.css";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import {
   GoogleCredentialResponse,
@@ -33,7 +33,11 @@ function Login() {
     throw new Error("useContext must be used within a UserProvider");
   }
 
-  const { updateUser } = userContext;
+  const { updateUser, user } = userContext;
+
+  useEffect(() => {
+    if (user) navigate("/");
+  }, [userContext]);
 
   const handleSuccess = async (response: GoogleCredentialResponse) => {
     try {
