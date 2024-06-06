@@ -1,31 +1,31 @@
-import { createContext, useState, ReactNode } from "react";
-import { UserPreferences } from "../types/UserPreferences";
+import { createContext, useState, ReactNode, useCallback } from "react";
+import { UserPreferencesType } from "../types/UserPreferences";
+import { Provider } from "../types/Provider";
 
 interface UserPreferencesContextProps {
-  userPreferences: UserPreferences | null;
-  updateUser: (userPreferences: UserPreferences) => void;
+  userPreferences: UserPreferencesType | null;
+  updateUser: (userPreferences: UserPreferencesType) => void;
 }
 
 const UserPreferencesContext = createContext<
   UserPreferencesContextProps | undefined
 >(undefined);
 
-interface UserPreferencesProviderProps {
-  children: ReactNode;
-}
-
-export const UserPreferencesProvider = ({
-  children,
-}: UserPreferencesProviderProps) => {
+export const UserPreferencesProvider = ({ children }: Provider) => {
   const [userPreferences, setUserPreferences] =
-    useState<UserPreferences | null>(null);
+    useState<UserPreferencesType | null>(null);
 
-  const updateUser = (userPreferences: UserPreferences) => {
-    setUserPreferences(userPreferences);
-  };
+  const updateUserPreferences = useCallback(
+    (userPreferences: UserPreferencesType) => {
+      setUserPreferences(userPreferences);
+    },
+    []
+  );
 
   return (
-    <UserPreferencesContext.Provider value={{ userPreferences, updateUser }}>
+    <UserPreferencesContext.Provider
+      value={{ userPreferences, updateUser: updateUserPreferences }}
+    >
       {children}
     </UserPreferencesContext.Provider>
   );

@@ -29,10 +29,6 @@ function Login() {
   const navigate = useNavigate();
   const userContext = useContext(UserContext);
 
-  if (!userContext) {
-    throw new Error("useContext must be used within a UserProvider");
-  }
-
   const { updateUser, user } = userContext;
 
   useEffect(() => {

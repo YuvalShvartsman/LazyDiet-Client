@@ -1,9 +1,10 @@
-import { createContext, useState, useEffect, ReactNode } from "react";
+import { createContext, useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../types/User";
 import { URLS } from "../axiosConfig/URLS";
 import db from "../axiosConfig/axiosInstance";
+import { Provider } from "../types/Provider";
 
 type DecodedToken = {
   userId: string;
@@ -14,13 +15,14 @@ type UserContextProps = {
   updateUser: (token: string) => void;
 };
 
-const UserContext = createContext<UserContextProps | undefined>(undefined);
-
-type UserProviderProps = {
-  children: ReactNode;
+const initialContextValue = {
+  user: null,
+  updateUser: () => {},
 };
 
-export const UserProvider = ({ children }: UserProviderProps) => {
+const UserContext = createContext<UserContextProps>(initialContextValue);
+
+export const UserProvider = ({ children }: Provider) => {
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -44,10 +46,10 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     }
   };
 
-  const updateUser = (token: string) => {
+  const updateUser = useCallback((token: string) => {
     Cookies.set("token", token, { expires: 1, sameSite: "Strict" });
     getUser(token);
-  };
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, updateUser }}>

@@ -1,5 +1,5 @@
 import type { FormProps } from "antd";
-import { AutoComplete, Button, Checkbox, Form, Input, Select } from "antd";
+import { Button, Checkbox, Form, Input, Select } from "antd";
 import { UserPreferencesType } from "../../types/UserPreferences";
 
 function UserPreferences() {
@@ -83,6 +83,7 @@ function UserPreferences() {
         label="Meals per day:"
         name="amountOfMeals"
         rules={[
+          { required: true, message: "It is never too late!" },
           {
             validator: (_, value) => {
               if (!value || (value >= 1 && value <= 8)) {
@@ -120,9 +121,9 @@ function UserPreferences() {
           placeholder="Select a option and change input text above"
           allowClear
         >
-          {sensitivities.map((sensitivitiy) => (
-            <Option value={sensitivitiy} key={"key" + sensitivitiy}>
-              {sensitivitiy}
+          {sensitivities.map((sensitivity) => (
+            <Option value={sensitivity} key={"key" + sensitivity}>
+              {sensitivity}
             </Option>
           ))}
         </Select>
