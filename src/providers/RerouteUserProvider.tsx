@@ -4,7 +4,7 @@ import UserPreferencesContext from "../contexts/UserPreferencesContext";
 import { useNavigate } from "react-router-dom";
 import { Provider } from "../types/Provider";
 
-function UserDataCheckProvider({ children }: Provider) {
+function RerouteUserProvider({ children }: Provider) {
   const navigate = useNavigate();
 
   const userContext = useContext(UserContext);
@@ -25,4 +25,4 @@ function UserDataCheckProvider({ children }: Provider) {
   return <>{children}</>;
 }
 
-export default UserDataCheckProvider;
+export default RerouteUserProvider;
