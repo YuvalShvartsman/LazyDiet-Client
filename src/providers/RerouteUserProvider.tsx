@@ -10,10 +10,6 @@ function RerouteUserProvider({ children }: Provider) {
   const userContext = useContext(UserContext);
   const userPreferencesContext = useContext(UserPreferencesContext);
 
-  if (!userContext || !userPreferencesContext) {
-    throw new Error("useContext must be used within a UserProvider");
-  }
-
   const { user } = userContext;
   const { userPreferences } = userPreferencesContext;
 

@@ -7,9 +7,13 @@ interface UserPreferencesContextProps {
   updateUser: (userPreferences: UserPreferencesType) => void;
 }
 
-const UserPreferencesContext = createContext<
-  UserPreferencesContextProps | undefined
->(undefined);
+const initialContextValue = {
+  userPreferences: null,
+  updateUser: () => {},
+};
+
+const UserPreferencesContext =
+  createContext<UserPreferencesContextProps>(initialContextValue);
 
 export const UserPreferencesProvider = ({ children }: Provider) => {
   const [userPreferences, setUserPreferences] =
