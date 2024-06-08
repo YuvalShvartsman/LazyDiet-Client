@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../contexts/UserContext";
 import UserPreferencesContext from "../contexts/UserPreferencesContext";
 import { useNavigate } from "react-router-dom";
@@ -13,9 +13,14 @@ function RerouteUserProvider({ children }: Provider) {
   const { user } = userContext;
   const { userPreferences } = userPreferencesContext;
 
+  const checkWhichRoute = () => {
+    if (!user) return "/login";
+    if (!userPreferences) return "/userPreferences";
+    return "/";
+  };
+
   useEffect(() => {
-    if (!user) navigate("/login");
-    else if (!userPreferences) navigate("/userPreferences");
+    navigate(checkWhichRoute());
   }, [userContext, userPreferencesContext]);
 
   return <>{children}</>;

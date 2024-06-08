@@ -83,7 +83,7 @@ function UserPreferences() {
         label="Meals per day:"
         name="amountOfMeals"
         rules={[
-          { required: true, message: "It is never too late!" },
+          { required: true, message: "Dont be shy, put some more!" },
           {
             validator: (_, value) => {
               if (!value || (value >= 1 && value <= 8)) {

@@ -31,9 +31,13 @@ function Login() {
 
   const { updateUser, user } = userContext;
 
+  // useEffect(() => {
+  //   if (user) navigate("/");
+  // }, [userContext]);
+
   useEffect(() => {
-    if (user) navigate("/");
-  }, [userContext]);
+    updateUser("amogus");
+  }, []);
 
   const handleSuccess = async (response: GoogleCredentialResponse) => {
     try {
@@ -57,18 +61,18 @@ function Login() {
   };
 
   return (
-    <GoogleOAuthProvider clientId="828545353398-jhc8gosa7j782nj35cd1vtaieqkfjusi.apps.googleusercontent.com">
-      <div className="Login-Screen">
-        <img src={IdleAvocado} className="Login-Logo" />
-        <h2>Login with Google</h2>
-        <GoogleLogin
+    // <GoogleOAuthProvider clientId="828545353398-jhc8gosa7j782nj35cd1vtaieqkfjusi.apps.googleusercontent.com">
+    <div className="Login-Screen">
+      <img src={IdleAvocado} className="Login-Logo" />
+      <h2>Login with Google</h2>
+      {/* <GoogleLogin
           onSuccess={handleSuccess}
           onError={() => handleFailure}
           theme="filled_black"
           shape="circle"
-        />
-      </div>
-    </GoogleOAuthProvider>
+        /> */}
+    </div>
+    // </GoogleOAuthProvider>
   );
 }
 

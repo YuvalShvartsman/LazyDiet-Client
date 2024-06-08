@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 import { Provider } from "../types/Provider";
+import Loading from "../components/Loading/Loading";
 
 type LoadingContextProps = {
   loading: boolean | null;
@@ -14,13 +15,13 @@ const initialContextValue = {
 const LoadingContext = createContext<LoadingContextProps>(initialContextValue);
 
 export const LoadingProvider = ({ children }: Provider) => {
-  const [loading, setLoading] = useState<boolean | null>(null);
+  const [loading, setLoading] = useState<boolean | null>(false);
 
-  const updateLoading = (isLoading: boolean) => [setLoading(isLoading)];
+  const updateLoading = (isLoading: boolean) => setLoading(isLoading);
 
   return (
     <LoadingContext.Provider value={{ loading, updateLoading }}>
-      {children}
+      {loading ? <Loading /> : children}
     </LoadingContext.Provider>
   );
 };
