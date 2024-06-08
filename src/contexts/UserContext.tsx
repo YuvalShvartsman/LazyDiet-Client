@@ -24,7 +24,7 @@ const initialContextValue = {
 const UserContext = createContext<UserContextProps>(initialContextValue);
 
 export const UserProvider = ({ children }: Provider) => {
-  const { request, data } = useSendApiReq<User>();
+  const { request, data } = useSendApiReq<{ user: User }>();
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -59,7 +59,9 @@ export const UserProvider = ({ children }: Provider) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user: data as User, updateUser }}>
+    <UserContext.Provider
+      value={{ user: data?.user ? data?.user : null, updateUser }}
+    >
       {children}
     </UserContext.Provider>
   );

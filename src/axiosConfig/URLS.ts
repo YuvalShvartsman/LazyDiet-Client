@@ -4,4 +4,8 @@ export const URLS = {
 
   // users get -
   USER_BY_GOOGLE_ID: "users/userById/",
+
+  //usersPreferences post -
+
+  USER_PREFERENCES: "userPreferences/",
 };

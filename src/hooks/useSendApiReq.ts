@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { Status, UseApiResponse } from "../types/UseSendApi";
 import { NotificationContext } from "../contexts/NotificationContext";
 import axios, { AxiosRequestConfig } from "axios";

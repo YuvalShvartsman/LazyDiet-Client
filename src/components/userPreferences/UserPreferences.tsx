@@ -1,12 +1,17 @@
 import type { FormProps } from "antd";
 import { Button, Checkbox, Form, Input, Select } from "antd";
 import { UserPreferencesType } from "../../types/UserPreferences";
+import { useContext } from "react";
+import UserPreferencesContext from "../../contexts/UserPreferencesContext";
+import UserContext from "../../contexts/UserContext";
 
 function UserPreferences() {
+  const { user } = useContext(UserContext);
+  const { updateUserPreferences } = useContext(UserPreferencesContext);
   const { Option } = Select;
 
   const onFinish: FormProps<UserPreferencesType>["onFinish"] = (values) => {
-    console.log("Success:", values);
+    if (user) updateUserPreferences(values, user._id ?? "");
   };
 
   const onFinishFailed: FormProps<UserPreferencesType>["onFinishFailed"] = (
@@ -23,7 +28,7 @@ function UserPreferences() {
 
   return (
     <Form
-      name="userPreferences"
+      name="UserPreferences"
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       style={{ maxWidth: 600 }}
