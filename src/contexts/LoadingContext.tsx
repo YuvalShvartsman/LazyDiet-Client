@@ -3,24 +3,22 @@ import { Provider } from "../types/Provider";
 import Loading from "../components/Loading/Loading";
 
 type LoadingContextProps = {
-  loading: boolean | null;
-  updateLoading: (loading: boolean) => void;
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
 };
 
 const initialContextValue = {
   loading: false,
-  updateLoading: () => {},
+  setLoading: () => {},
 };
 
 const LoadingContext = createContext<LoadingContextProps>(initialContextValue);
 
 export const LoadingProvider = ({ children }: Provider) => {
-  const [loading, setLoading] = useState<boolean | null>(false);
-
-  const updateLoading = (isLoading: boolean) => setLoading(isLoading);
+  const [loading, setLoading] = useState<boolean>(false);
 
   return (
-    <LoadingContext.Provider value={{ loading, updateLoading }}>
+    <LoadingContext.Provider value={{ loading, setLoading }}>
       {loading ? <Loading /> : children}
     </LoadingContext.Provider>
   );

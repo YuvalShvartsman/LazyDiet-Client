@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode, useCallback } from "react";
+import { createContext, useState, useCallback } from "react";
 import { UserPreferencesType } from "../types/UserPreferences";
 import { Provider } from "../types/Provider";
 

@@ -1,6 +1,5 @@
 import { UserProvider } from "../contexts/UserContext";
 import { UserPreferencesProvider } from "../contexts/UserPreferencesContext";
-import { LoadingProvider } from "../contexts/LoadingContext";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
@@ -9,11 +8,12 @@ import Login from "../components/login/Login";
 import UserPreferences from "../components/userPreferences/UserPreferences";
 import RerouteUserProvider from "./RerouteUserProvider";
 import NotificationProvider from "./NotificationProvider";
+import { LoadingProvider } from "../contexts/LoadingContext";
 
 function RouteProvider() {
   return (
-    <LoadingProvider>
-      <NotificationProvider>
+    <NotificationProvider>
+      <LoadingProvider>
         <UserProvider>
           <UserPreferencesProvider>
             <BrowserRouter>
@@ -30,8 +30,8 @@ function RouteProvider() {
             </BrowserRouter>
           </UserPreferencesProvider>
         </UserProvider>
-      </NotificationProvider>
-    </LoadingProvider>
+      </LoadingProvider>
+    </NotificationProvider>
   );
 }
 

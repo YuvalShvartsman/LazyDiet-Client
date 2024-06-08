@@ -29,7 +29,7 @@ function Login() {
   const navigate = useNavigate();
   const userContext = useContext(UserContext);
 
-  const { updateUser, user } = userContext;
+  const { updateUser } = userContext;
 
   // useEffect(() => {
   //   if (user) navigate("/");
@@ -38,6 +38,8 @@ function Login() {
   useEffect(() => {
     updateUser("amogus");
   }, []);
+
+  // updateUser("amogus");
 
   const handleSuccess = async (response: GoogleCredentialResponse) => {
     try {

@@ -3,11 +3,9 @@ import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { User } from "../types/User";
 import { URLS } from "../axiosConfig/URLS";
-import db from "../axiosConfig/axiosInstance";
 import { Provider } from "../types/Provider";
 import Swal from "sweetalert2";
 import { useSendApiReq } from "../hooks/useSendApiReq";
-import Loading from "../components/Loading/Loading";
 
 type DecodedToken = {
   userId: string;
@@ -26,7 +24,7 @@ const initialContextValue = {
 const UserContext = createContext<UserContextProps>(initialContextValue);
 
 export const UserProvider = ({ children }: Provider) => {
-  const { request, data, loading } = useSendApiReq<User>();
+  const { request, data } = useSendApiReq<User>();
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -35,7 +33,7 @@ export const UserProvider = ({ children }: Provider) => {
     }
   }, []);
 
-  const getUser = (token: string) => {
+  const getUser = useCallback((token: string) => {
     try {
       // const decodedToken: DecodedToken = jwtDecode(token);
       // const userId = decodedToken.userId;
@@ -53,7 +51,7 @@ export const UserProvider = ({ children }: Provider) => {
       });
       console.error("Error finding a user", error);
     }
-  };
+  }, []);
 
   const updateUser = useCallback((token: string) => {
     Cookies.set("token", token, { expires: 1, sameSite: "Strict" });
@@ -62,7 +60,7 @@ export const UserProvider = ({ children }: Provider) => {
 
   return (
     <UserContext.Provider value={{ user: data as User, updateUser }}>
-      {loading ? <Loading /> : children}
+      {children}
     </UserContext.Provider>
   );
 };
