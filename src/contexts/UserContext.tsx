@@ -1,7 +1,7 @@
-import { createContext, useState, useEffect, useCallback } from "react";
+import { createContext, useEffect, useCallback, useState } from "react";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
-import { User } from "../types/User";
+import { User, UserInfo } from "../types/User";
 import { URLS } from "../axiosConfig/URLS";
 import { Provider } from "../types/Provider";
 import Swal from "sweetalert2";
@@ -12,36 +12,41 @@ type DecodedToken = {
 };
 
 type UserContextProps = {
-  user: User | null;
+  userData: User | null;
   updateUser: (token: string) => void;
 };
 
 const initialContextValue = {
-  user: null,
+  userData: null,
   updateUser: () => {},
 };
 
 const UserContext = createContext<UserContextProps>(initialContextValue);
 
 export const UserProvider = ({ children }: Provider) => {
-  const { request, data } = useSendApiReq<{ user: User }>();
+  const { request } = useSendApiReq<UserInfo>();
+  const [userData, setUserData] = useState<User | null>({});
 
   useEffect(() => {
     const token = Cookies.get("token");
-    if (token) {
-      getUser(token);
-    }
+    if (token) getUser(token);
   }, []);
 
   const getUser = useCallback((token: string) => {
     try {
-      // const decodedToken: DecodedToken = jwtDecode(token);
-      // const userId = decodedToken.userId;
-      const userId = "664b8daea88378e1372cc757"; // no network fix
-
-      request({
-        url: URLS.USER_BY_GOOGLE_ID + `${userId}`,
-        method: "GET",
+      const decodedToken: DecodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
+      // const userId = "664b8daea88378e1372cc757"; // no network fix
+      setUserData({
+        promise: new Promise(async () => {
+          const userInfo = (
+            await request({
+              url: URLS.USER_BY_GOOGLE_ID + `${userId}`,
+              method: "GET",
+            })
+          ).data;
+          setUserData({ user: userInfo });
+        }),
       });
     } catch (error) {
       Swal.fire({
@@ -59,9 +64,7 @@ export const UserProvider = ({ children }: Provider) => {
   }, []);
 
   return (
-    <UserContext.Provider
-      value={{ user: data?.user ? data?.user : null, updateUser }}
-    >
+    <UserContext.Provider value={{ userData, updateUser }}>
       {children}
     </UserContext.Provider>
   );

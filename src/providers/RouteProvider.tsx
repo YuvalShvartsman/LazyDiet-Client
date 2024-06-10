@@ -9,29 +9,33 @@ import UserPreferences from "../components/userPreferences/UserPreferences";
 import RerouteUserProvider from "./RerouteUserProvider";
 import NotificationProvider from "./NotificationProvider";
 import { LoadingProvider } from "../contexts/LoadingContext";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function RouteProvider() {
+  const qClient = new QueryClient();
   return (
-    <NotificationProvider>
+    <QueryClientProvider client={qClient}>
       <LoadingProvider>
-        <UserProvider>
-          <UserPreferencesProvider>
-            <BrowserRouter>
-              <RerouteUserProvider>
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                  <Route path="/login" element={<Login />} />
-                  <Route
-                    path="/userPreferences"
-                    element={<UserPreferences />}
-                  />
-                </Routes>
-              </RerouteUserProvider>
-            </BrowserRouter>
-          </UserPreferencesProvider>
-        </UserProvider>
+        <NotificationProvider>
+          <UserProvider>
+            <UserPreferencesProvider>
+              <BrowserRouter>
+                <RerouteUserProvider>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route
+                      path="/userPreferences"
+                      element={<UserPreferences />}
+                    />
+                  </Routes>
+                </RerouteUserProvider>
+              </BrowserRouter>
+            </UserPreferencesProvider>
+          </UserProvider>
+        </NotificationProvider>
       </LoadingProvider>
-    </NotificationProvider>
+    </QueryClientProvider>
   );
 }
 

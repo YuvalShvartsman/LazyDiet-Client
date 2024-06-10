@@ -1,8 +1,7 @@
-import { createContext, useState, useCallback } from "react";
+import { createContext, useState, useCallback, useEffect } from "react";
 import { UserPreferencesType } from "../types/UserPreferences";
 import { Provider } from "../types/Provider";
 import { useSendApiReq } from "../hooks/useSendApiReq";
-import { User } from "../types/User";
 import { URLS } from "../axiosConfig/URLS";
 
 interface UserPreferencesContextProps {
@@ -38,10 +37,13 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
     },
     []
   );
+  useEffect(() => {
+    setUserPreferences(data ?? null);
+  }, [data]);
 
   return (
     <UserPreferencesContext.Provider
-      value={{ userPreferences: data ? data : null, updateUserPreferences }}
+      value={{ userPreferences, updateUserPreferences }}
     >
       {children}
     </UserPreferencesContext.Provider>
