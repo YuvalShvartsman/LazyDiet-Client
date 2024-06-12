@@ -15,16 +15,20 @@ function RerouteUserProvider({ children }: Provider) {
 
   const checkWhichRoute = async () => {
     if (userData && Object.keys(userData).length < 1) return false;
-    await userData.promise;
-    if (!userData.user) return "/login";
+    await userData?.promise;
+    if (!userData?.user) return "/login";
     if (!userPreferences) return "/userPreferences";
     return "/";
   };
 
   useEffect(() => {
     const Nav = async () => {
-      const isOkay = await checkWhichRoute();
-      if (typeof isOkay === "string") navigate(await checkWhichRoute());
+      // const isOkay = await checkWhichRoute();
+      if (userData && Object.keys(userData).length < 1) return false;
+      await userData?.promise;
+      if (!userData?.user) navigate("/login");
+      else if (!userPreferences) navigate("/userPreferences");
+      else navigate("/");
     };
     Nav();
   }, [userData, userPreferences]);
