@@ -12,12 +12,12 @@ type DecodedToken = {
 };
 
 type UserContextProps = {
-  userData: User | null;
+  userData: User | null | undefined;
   updateUser: (token: string) => void;
 };
 
 const initialContextValue = {
-  userData: null,
+  userData: undefined,
   updateUser: () => {},
 };
 
@@ -25,7 +25,9 @@ const UserContext = createContext<UserContextProps>(initialContextValue);
 
 export const UserProvider = ({ children }: Provider) => {
   const { request } = useSendApiReq<UserInfo>();
-  const [userData, setUserData] = useState<User | null>({});
+  const [userData, setUserData] = useState<User | null | undefined>(undefined);
+
+  console.log(userData);
 
   useEffect(() => {
     const token = Cookies.get("token");

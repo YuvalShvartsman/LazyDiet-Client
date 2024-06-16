@@ -1,6 +1,6 @@
 import "./Login.css";
 
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 
 import {
   GoogleCredentialResponse,
@@ -30,7 +30,6 @@ function Login() {
   const { updateUser } = userContext;
 
   const handleSuccess = async (response: GoogleCredentialResponse) => {
-    console.log("hai");
     try {
       const res = (
         await request({
