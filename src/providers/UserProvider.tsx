@@ -21,7 +21,7 @@ export const UserProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<User>();
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const token = Cookies.get("userToken");
     if (token) getUser(token);
   }, []);
 
@@ -44,7 +44,7 @@ export const UserProvider = ({ children }: Provider) => {
   }, []);
 
   const updateUser = useCallback((token: string) => {
-    Cookies.set("token", token, { expires: 1, sameSite: "Strict" });
+    Cookies.set("userToken", token, { expires: 1, sameSite: "Strict" });
     getUser(token);
   }, []);
 

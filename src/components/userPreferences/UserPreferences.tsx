@@ -1,17 +1,20 @@
+import { useContext } from "react";
+
 import type { FormProps } from "antd";
 import { Button, Checkbox, Form, Input, Select } from "antd";
-import { UserPreferencesType } from "../../types/UserPreferences";
-import { useContext } from "react";
+
 import UserPreferencesContext from "../../contexts/UserPreferencesContext";
 import UserContext from "../../contexts/UserContext";
 
+import { UserPreferencesType } from "../../types/UserPreferences";
+
 function UserPreferences() {
-  const { user } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   const { updateUserPreferences } = useContext(UserPreferencesContext);
   const { Option } = Select;
 
   const onFinish: FormProps<UserPreferencesType>["onFinish"] = (values) => {
-    if (user) updateUserPreferences(values, user._id ?? "");
+    if (userData) updateUserPreferences(values, userData._id ?? "");
   };
 
   const onFinishFailed: FormProps<UserPreferencesType>["onFinishFailed"] = (

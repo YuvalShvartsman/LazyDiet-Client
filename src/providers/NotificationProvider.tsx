@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+
 import { NotificationContext } from "../contexts/NotificationContext";
 
 import { Provider } from "../types/Provider";
+
 import { notification } from "antd";
 
 export const NotificationProvider = ({ children }: Provider) => {

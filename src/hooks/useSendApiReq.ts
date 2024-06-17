@@ -1,12 +1,17 @@
-import axios, { AxiosRequestConfig } from "axios";
 import { useContext, useState } from "react";
 import { useMutation } from "react-query";
+
+import axios, { AxiosRequestConfig } from "axios";
+import { BASE_URL } from "../axiosConfig/axiosInstance";
+
 import { MessageResponse, UseApiResponse } from "../types/UseSendApi";
+
 import LoadingContext from "../contexts/LoadingContext";
 
 export const useSendApiReq = <T>(): UseApiResponse<T> => {
   const [data, setData] = useState<T>();
   const { setLoading } = useContext(LoadingContext);
+
   const { mutateAsync } = useMutation(
     async (config: AxiosRequestConfig) => {
       setData(undefined);
@@ -14,7 +19,7 @@ export const useSendApiReq = <T>(): UseApiResponse<T> => {
       const response = await axios({
         ...config,
         url: config.url,
-        baseURL: "http://localhost:3000",
+        baseURL: BASE_URL,
       });
       return response.data;
     },

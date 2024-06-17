@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 import UserPreferencesContext from "../contexts/UserPreferencesContext";
@@ -13,7 +14,7 @@ function RerouteUserProvider({ children }: Provider) {
   const userPreferencesContext = useContext(UserPreferencesContext);
 
   const { userPreferences } = userPreferencesContext;
-  const userToken = Cookies.get("token");
+  const userToken = Cookies.get("userToken");
 
   useEffect(() => {
     const Nav = async () => {

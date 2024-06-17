@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 import { QueryClient, QueryClientProvider } from "react-query";
 
 import RerouteUserProvider from "./RerouteUserProvider";
