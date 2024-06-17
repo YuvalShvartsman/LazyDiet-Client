@@ -1,24 +1,12 @@
-import { createContext, useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
+
+import UserPreferencesContext from "../contexts/UserPreferencesContext";
+
+import { URLS } from "../axiosConfig/URLS";
+import { useSendApiReq } from "../hooks/useSendApiReq";
+
 import { UserPreferencesType } from "../types/UserPreferences";
 import { Provider } from "../types/Provider";
-import { useSendApiReq } from "../hooks/useSendApiReq";
-import { URLS } from "../axiosConfig/URLS";
-
-interface UserPreferencesContextProps {
-  userPreferences: UserPreferencesType | null;
-  updateUserPreferences: (
-    userPreferences: UserPreferencesType,
-    userId: string
-  ) => void;
-}
-
-const initialContextValue = {
-  userPreferences: null,
-  updateUserPreferences: () => {},
-};
-
-const UserPreferencesContext =
-  createContext<UserPreferencesContextProps>(initialContextValue);
 
 export const UserPreferencesProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<UserPreferencesType>();
@@ -50,4 +38,4 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
   );
 };
 
-export default UserPreferencesContext;
+export default UserPreferencesProvider;

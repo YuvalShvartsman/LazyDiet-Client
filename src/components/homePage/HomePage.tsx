@@ -2,16 +2,16 @@ import "./HomePage.css";
 
 import { useContext } from "react";
 
-import UserContext from "../../contexts/UserContext";
+import userContext from "../../contexts/UserContext";
 
 function HomePage() {
-  const userContext = useContext(UserContext);
+  const user = useContext(userContext);
 
-  const { user } = userContext;
+  const { userData } = user;
 
   return (
     <div className="Home-Page">
-      <h1>hello, {user?.name}</h1>
+      <h1>hello, {userData?.name}</h1>
     </div>
   );
 }

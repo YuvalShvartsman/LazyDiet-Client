@@ -1,15 +1,19 @@
-import { UserProvider } from "../contexts/UserContext";
-import { UserPreferencesProvider } from "../contexts/UserPreferencesContext";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-import HomePage from "../components/homePage/HomePage";
+import RerouteUserProvider from "./RerouteUserProvider";
+
+import NotificationProvider from "./NotificationProvider";
+
+import UserProvider from "../providers/UserProvider";
+
+import LoadingProvider from "../providers/LoadingProvider";
+
+import UserPreferencesProvider from "../providers/UserPreferencesProvider";
+
 import Login from "../components/login/Login";
 import UserPreferences from "../components/userPreferences/UserPreferences";
-import RerouteUserProvider from "./RerouteUserProvider";
-import NotificationProvider from "./NotificationProvider";
-import { LoadingProvider } from "../contexts/LoadingContext";
-import { QueryClient, QueryClientProvider } from "react-query";
+import HomePage from "../components/homePage/HomePage";
 
 function RouteProvider() {
   const qClient = new QueryClient();
