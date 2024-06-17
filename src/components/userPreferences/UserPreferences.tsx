@@ -6,12 +6,16 @@ import { Button, Checkbox, Form, Input, Select } from "antd";
 import UserPreferencesContext from "../../contexts/UserPreferencesContext";
 import UserContext from "../../contexts/UserContext";
 
+import useGetPreferencesOptions from "../../hooks/useGetPreferencesOptions";
+
 import { UserPreferencesType } from "../../types/UserPreferences";
 
 function UserPreferences() {
+  const { Option } = Select;
   const { userData } = useContext(UserContext);
   const { updateUserPreferences } = useContext(UserPreferencesContext);
-  const { Option } = Select;
+
+  const options = useGetPreferencesOptions();
 
   const onFinish: FormProps<UserPreferencesType>["onFinish"] = (values) => {
     if (userData) updateUserPreferences(values, userData._id ?? "");
@@ -22,12 +26,6 @@ function UserPreferences() {
   ) => {
     console.log("Failed:", errorInfo);
   };
-
-  const goals = ["bulking", "cutting", "weight-loss", "health-based"];
-
-  const diets = ["keto", "Vegan", "Vegetarian"];
-
-  const sensitivities = ["lactose", "gluten", "nuts"];
 
   return (
     <Form
@@ -79,11 +77,12 @@ function UserPreferences() {
           placeholder="Select a option and change input text above"
           allowClear
         >
-          {goals.map((goal) => (
-            <Option value={goal} key={"key" + goal}>
-              {goal}
-            </Option>
-          ))}
+          {options?.goals &&
+            options.goals.map((goal) => (
+              <Option value={goal.goal} key={"goal - " + goal._id}>
+                {goal.goal}
+              </Option>
+            ))}
         </Select>
       </Form.Item>
 
@@ -113,11 +112,12 @@ function UserPreferences() {
           placeholder="Select a option and change input text above"
           allowClear
         >
-          {diets.map((diet) => (
-            <Option value={diet} key={"key" + diet}>
-              {diet}
-            </Option>
-          ))}
+          {options?.dietTypes &&
+            options.dietTypes.map((diet) => (
+              <Option value={diet.dietType} key={"diet -" + diet._id}>
+                {diet.dietType}
+              </Option>
+            ))}
         </Select>
       </Form.Item>
 
@@ -129,11 +129,15 @@ function UserPreferences() {
           placeholder="Select a option and change input text above"
           allowClear
         >
-          {sensitivities.map((sensitivity) => (
-            <Option value={sensitivity} key={"key" + sensitivity}>
-              {sensitivity}
-            </Option>
-          ))}
+          {options?.sensitivities &&
+            options.sensitivities.map((sensitivity) => (
+              <Option
+                value={sensitivity.sensitivity}
+                key={"sensitivity - " + sensitivity._id}
+              >
+                {sensitivity.sensitivity}
+              </Option>
+            ))}
         </Select>
       </Form.Item>
 

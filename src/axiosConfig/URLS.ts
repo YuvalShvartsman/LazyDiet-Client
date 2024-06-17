@@ -8,4 +8,8 @@ export const URLS = {
   //usersPreferences post -
 
   USER_PREFERENCES: "userPreferences/",
+
+  //usersPreferences get -
+
+  PREFERENCES_OPTIONS: "userPreferences/preferencesOptions",
 };
