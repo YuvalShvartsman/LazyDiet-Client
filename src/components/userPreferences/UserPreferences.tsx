@@ -13,12 +13,15 @@ import { UserPreferencesType } from "../../types/UserPreferences";
 function UserPreferences() {
   const { Option } = Select;
   const { userData } = useContext(UserContext);
-  const { updateUserPreferences } = useContext(UserPreferencesContext);
+  const { updateUserPreferences, userPreferences } = useContext(
+    UserPreferencesContext
+  );
 
+  console.log(userPreferences);
   const options = useGetPreferencesOptions();
 
   const onFinish: FormProps<UserPreferencesType>["onFinish"] = (values) => {
-    if (userData) updateUserPreferences(values, userData._id ?? "");
+    if (userData?._id) updateUserPreferences(values, userData._id);
   };
 
   const onFinishFailed: FormProps<UserPreferencesType>["onFinishFailed"] = (
@@ -79,7 +82,7 @@ function UserPreferences() {
         >
           {options?.goals &&
             options.goals.map((goal) => (
-              <Option value={goal.goal} key={"goal - " + goal._id}>
+              <Option value={goal._id} key={"goal - " + goal._id}>
                 {goal.goal}
               </Option>
             ))}
@@ -114,7 +117,7 @@ function UserPreferences() {
         >
           {options?.dietTypes &&
             options.dietTypes.map((diet) => (
-              <Option value={diet.dietType} key={"diet -" + diet._id}>
+              <Option value={diet._id} key={"diet -" + diet._id}>
                 {diet.dietType}
               </Option>
             ))}
@@ -132,7 +135,7 @@ function UserPreferences() {
           {options?.sensitivities &&
             options.sensitivities.map((sensitivity) => (
               <Option
-                value={sensitivity.sensitivity}
+                value={sensitivity._id}
                 key={"sensitivity - " + sensitivity._id}
               >
                 {sensitivity.sensitivity}

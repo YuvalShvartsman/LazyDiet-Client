@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
 import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
@@ -11,12 +11,8 @@ import { Provider } from "../types/Provider";
 export const UserPreferencesProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<UserPreferencesType>();
 
-  const [userPreferences, setUserPreferences] =
-    useState<UserPreferencesType | null>(null);
-
   const updateUserPreferences = useCallback(
     (userPreferences: UserPreferencesType, userId: string) => {
-      setUserPreferences(userPreferences);
       request({
         url: URLS.USER_PREFERENCES,
         method: "POST",
@@ -25,13 +21,10 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
     },
     []
   );
-  useEffect(() => {
-    setUserPreferences(data ?? null);
-  }, [data]);
 
   return (
     <UserPreferencesContext.Provider
-      value={{ userPreferences, updateUserPreferences }}
+      value={{ userPreferences: data, updateUserPreferences }}
     >
       {children}
     </UserPreferencesContext.Provider>

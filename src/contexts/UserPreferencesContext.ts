@@ -2,7 +2,7 @@ import { createContext } from "react";
 import { UserPreferencesType } from "../types/UserPreferences";
 
 interface UserPreferencesContextProps {
-  userPreferences: UserPreferencesType | null;
+  userPreferences: UserPreferencesType | undefined;
   updateUserPreferences: (
     userPreferences: UserPreferencesType,
     userId: string
@@ -10,7 +10,7 @@ interface UserPreferencesContextProps {
 }
 
 const initialContextValue = {
-  userPreferences: null,
+  userPreferences: undefined,
   updateUserPreferences: () => {},
 };
 
