@@ -14,15 +14,13 @@ function RerouteUserProvider({ children }: Provider) {
   const userPreferencesContext = useContext(UserPreferencesContext);
 
   const { userPreferences } = userPreferencesContext;
+
   const userToken = Cookies.get("userToken");
 
   useEffect(() => {
-    const Nav = async () => {
-      if (!userToken) navigate("/login");
-      else if (!userPreferences) navigate("/userPreferences");
-      else navigate("/");
-    };
-    Nav();
+    if (!userToken) navigate("/login");
+    else if (!userPreferences) navigate("/userPreferences");
+    else navigate("/");
   }, [userToken, userPreferences]);
 
   return <>{children}</>;

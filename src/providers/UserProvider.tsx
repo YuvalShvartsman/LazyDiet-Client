@@ -12,12 +12,14 @@ import { User } from "../types/User";
 import { Provider } from "../types/Provider";
 
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 type DecodedToken = {
   userId: string;
 };
 
 export const UserProvider = ({ children }: Provider) => {
+  const navigate = useNavigate();
   const { request, data } = useSendApiReq<User>();
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export const UserProvider = ({ children }: Provider) => {
         method: "GET",
       });
     } catch (error) {
+      navigate("/login");
       Swal.fire({
         title: "Error!",
         text: "Could not identify you as a user in LazyDiet",
