@@ -13,11 +13,8 @@ import { UserPreferencesType } from "../../types/UserPreferences";
 function UserPreferences() {
   const { Option } = Select;
   const { userData } = useContext(UserContext);
-  const { updateUserPreferences, userPreferences } = useContext(
-    UserPreferencesContext
-  );
+  const { updateUserPreferences } = useContext(UserPreferencesContext);
 
-  console.log(userPreferences);
   const options = useGetPreferencesOptions();
 
   const onFinish: FormProps<UserPreferencesType>["onFinish"] = (values) => {

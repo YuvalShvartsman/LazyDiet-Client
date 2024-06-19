@@ -1,21 +1,19 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
-
-import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
 import Cookies from "js-cookie";
 
 import { Provider } from "../types/Provider";
+import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
 function RerouteUserProvider({ children }: Provider) {
   const navigate = useNavigate();
 
-  const userPreferencesContext = useContext(UserPreferencesContext);
-
-  const { userPreferences } = userPreferencesContext;
+  const { userPreferences } = useContext(UserPreferencesContext);
 
   const userToken = Cookies.get("userToken");
+  // const userPreferencesToken = Cookies.get("userPreferencesToken");
 
   useEffect(() => {
     if (!userToken) navigate("/login");
