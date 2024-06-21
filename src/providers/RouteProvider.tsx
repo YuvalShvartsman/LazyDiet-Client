@@ -22,9 +22,9 @@ function RouteProvider() {
     <QueryClientProvider client={qClient}>
       <LoadingProvider>
         <NotificationProvider>
-          <UserPreferencesProvider>
-            <BrowserRouter>
-              <UserProvider>
+          <BrowserRouter>
+            <UserProvider>
+              <UserPreferencesProvider>
                 <RerouteUserProvider>
                   <Routes>
                     <Route path="/" element={<HomePage />} />
@@ -35,9 +35,9 @@ function RouteProvider() {
                     />
                   </Routes>
                 </RerouteUserProvider>
-              </UserProvider>
-            </BrowserRouter>
-          </UserPreferencesProvider>
+              </UserPreferencesProvider>
+            </UserProvider>
+          </BrowserRouter>
         </NotificationProvider>
       </LoadingProvider>
     </QueryClientProvider>

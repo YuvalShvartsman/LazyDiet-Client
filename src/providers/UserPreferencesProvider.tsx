@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
@@ -7,43 +7,53 @@ import { useSendApiReq } from "../hooks/useSendApiReq";
 
 import { UserPreferencesType } from "../types/UserPreferences";
 import { Provider } from "../types/Provider";
+
 import Cookies from "js-cookie";
+import Swal from "sweetalert2";
 
 export const UserPreferencesProvider = ({ children }: Provider) => {
-  const { request } = useSendApiReq<UserPreferencesType>();
-  const [userPreferences, setUserPreferences] = useState<UserPreferencesType>();
-  const userPreferencesFromStorage = Cookies.get("userPreferencesToken");
+  const { request, data } = useSendApiReq<UserPreferencesType>();
 
   useEffect(() => {
-    if (userPreferencesFromStorage)
-      setUserPreferences(
-        JSON.parse(userPreferencesFromStorage) as UserPreferencesType
-      );
-  }, [userPreferencesFromStorage]);
+    const token = Cookies.get("userPreferencesToken");
+    if (token) getUserPreferences(token);
+  }, []);
+
+  const getUserPreferences = async (userId: string) => {
+    try {
+      await request({
+        url: URLS.GET_USER_PREFERENCES + userId,
+        method: "GET",
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Could not retrieve your data",
+        icon: "error",
+      });
+    }
+  };
 
   const updateUserPreferences = useCallback(
     async (userPreferences: UserPreferencesType, userId: string) => {
-      const userPreferencesData = (
-        await request({
-          url: URLS.USER_PREFERENCES,
-          method: "POST",
-          data: { userPreferences, userId },
-        })
-      ).data;
-      if (!userPreferencesData) return;
-      localStorage.setItem(
-        "userPreferences",
-        JSON.stringify(userPreferencesData)
-      );
-      Cookies.set("userPreferencesToken", JSON.stringify(userPreferencesData));
-      setUserPreferences(userPreferencesData);
+      Cookies.set("userPreferencesToken", userId, {
+        expires: 1,
+        sameSite: "Strict",
+      });
+      getUserPreferences(userId);
+
+      await request({
+        url: URLS.USER_PREFERENCES,
+        method: "POST",
+        data: { userPreferences, userId },
+      });
     },
     []
   );
 
   return (
     <UserPreferencesContext.Provider
-      value={{ userPreferences, updateUserPreferences }}
+      value={{ userPreferences: data, updateUserPreferences }}
     >
       {children}
     </UserPreferencesContext.Provider>

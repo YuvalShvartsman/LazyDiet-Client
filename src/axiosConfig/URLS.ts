@@ -5,11 +5,15 @@ export const URLS = {
   // users get -
   USER_BY_GOOGLE_ID: "users/userById/",
 
-  //usersPreferences post -
+  //usersPreferences post-
 
   USER_PREFERENCES: "userPreferences/",
 
-  //usersPreferences get -
+  //usersPreferences get options -
+
+  GET_USER_PREFERENCES: "userPreferences/preferencesByUser/",
+
+  //usersPreferences get options -
 
   PREFERENCES_OPTIONS: "userPreferences/preferencesOptions",
 };
