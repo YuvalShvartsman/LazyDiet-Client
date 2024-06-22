@@ -4,7 +4,7 @@ import { UserPreferencesType } from "../types/UserPreferences";
 interface UserPreferencesContextProps {
   userPreferences: UserPreferencesType | undefined;
   updateUserPreferences: (
-    userPreferences: UserPreferencesType,
+    // userPreferences: UserPreferencesType,
     userId: string
   ) => void;
 }

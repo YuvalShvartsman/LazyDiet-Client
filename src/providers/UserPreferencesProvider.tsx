@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
@@ -15,7 +15,7 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<UserPreferencesType>();
 
   useEffect(() => {
-    const token = Cookies.get("userPreferencesToken");
+    const token = Cookies.get("preferencesToken");
     if (token) getUserPreferences(token);
   }, []);
 
@@ -34,22 +34,15 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
     }
   };
 
-  const updateUserPreferences = useCallback(
-    async (userPreferences: UserPreferencesType, userId: string) => {
-      Cookies.set("userPreferencesToken", userId, {
-        expires: 1,
-        sameSite: "Strict",
-      });
-      getUserPreferences(userId);
+  const updateUserPreferences = useCallback((userId: string) => {
+    Cookies.set("preferencesToken", userId, {
+      expires: 1,
+      sameSite: "Strict",
+    });
+    // getUserPreferences(userId);
+  }, []);
 
-      await request({
-        url: URLS.USER_PREFERENCES,
-        method: "POST",
-        data: { userPreferences, userId },
-      });
-    },
-    []
-  );
+  console.log("data is - ", data);
 
   return (
     <UserPreferencesContext.Provider
