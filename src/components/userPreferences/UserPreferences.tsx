@@ -9,32 +9,16 @@ import UserContext from "../../contexts/UserContext";
 import useGetPreferencesOptions from "../../hooks/useGetPreferencesOptions";
 
 import { UserPreferencesType } from "../../types/UserPreferences";
-import { useSendApiReq } from "../../hooks/useSendApiReq";
-import { URLS } from "../../axiosConfig/URLS";
 
 function UserPreferences() {
-  const { request } = useSendApiReq();
   const { Option } = Select;
   const { userData } = useContext(UserContext);
   const { updateUserPreferences } = useContext(UserPreferencesContext);
 
   const options = useGetPreferencesOptions();
 
-  const onFinish: FormProps<UserPreferencesType>["onFinish"] = async (
-    values
-  ) => {
-    if (userData?._id) {
-      updateUserPreferences(userData._id);
-      try {
-        await request({
-          url: URLS.USER_PREFERENCES,
-          method: "POST",
-          data: { userPreferences: values, userId: userData._id },
-        });
-      } catch (err) {
-        console.log("error is  -", err);
-      }
-    }
+  const onFinish: FormProps<UserPreferencesType>["onFinish"] = (values) => {
+    if (userData?._id) updateUserPreferences(userData._id, values);
   };
 
   const onFinishFailed: FormProps<UserPreferencesType>["onFinishFailed"] = (

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
@@ -34,13 +34,28 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
     }
   };
 
-  const updateUserPreferences = useCallback((userId: string) => {
-    Cookies.set("preferencesToken", userId, {
-      expires: 1,
-      sameSite: "Strict",
-    });
-    // getUserPreferences(userId);
-  }, []);
+  const updateUserPreferences = useCallback(
+    (userId: string, userPreferences: UserPreferencesType) => {
+      Cookies.set("preferencesToken", userId, {
+        expires: 1,
+        sameSite: "Strict",
+      });
+      try {
+        request({
+          url: URLS.USER_PREFERENCES,
+          method: "POST",
+          data: { userPreferences, userId: userId },
+        });
+      } catch (error) {
+        Swal.fire({
+          title: "Error!",
+          text: "Could not save your data",
+          icon: "error",
+        });
+      }
+    },
+    []
+  );
 
   console.log("data is - ", data);
 
