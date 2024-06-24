@@ -10,13 +10,13 @@ import LoadingContext from "../contexts/LoadingContext";
 function RerouteUserProvider({ children }: Provider) {
   const navigate = useNavigate();
 
-  const userToken = Cookies.get("userToken");
-  const userPreferencesToken = Cookies.get("preferencesToken");
+  const userCookie = Cookies.get("userToken");
+  const userPreferencesCookie = Cookies.get("userPreferences");
   const loading = useContext(LoadingContext);
 
   useEffect(() => {
-    if (!userToken) navigate("/login");
-    else if (!userPreferencesToken) navigate("/userPreferences");
+    if (!userCookie) navigate("/login");
+    else if (!userPreferencesCookie) navigate("/userPreferences");
     else navigate("/");
   }, [loading]);
 

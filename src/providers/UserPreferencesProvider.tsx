@@ -10,17 +10,24 @@ import { Provider } from "../types/Provider";
 
 import Cookies from "js-cookie";
 import Swal from "sweetalert2";
+import { jwtDecode } from "jwt-decode";
+
+type DecodedToken = {
+  userId: string;
+};
 
 export const UserPreferencesProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<UserPreferencesType>();
 
   useEffect(() => {
-    const token = Cookies.get("preferencesToken");
+    const token = Cookies.get("userToken");
     if (token) getUserPreferences(token);
   }, []);
 
-  const getUserPreferences = async (userId: string) => {
+  const getUserPreferences = async (token: string) => {
     try {
+      const decodedToken: DecodedToken = jwtDecode(token);
+      const userId = decodedToken.userId;
       await request({
         url: URLS.GET_USER_PREFERENCES + userId,
         method: "GET",
@@ -36,7 +43,8 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
 
   const updateUserPreferences = useCallback(
     (userId: string, userPreferences: UserPreferencesType) => {
-      Cookies.set("preferencesToken", userId, {
+      const stringifiedUserPreferences = JSON.stringify(userPreferences);
+      Cookies.set("userPreferences", stringifiedUserPreferences, {
         expires: 1,
         sameSite: "Strict",
       });
