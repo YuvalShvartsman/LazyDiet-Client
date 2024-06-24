@@ -59,7 +59,7 @@ function Login() {
   return (
     <GoogleOAuthProvider clientId="828545353398-jhc8gosa7j782nj35cd1vtaieqkfjusi.apps.googleusercontent.com">
       <div className="Login-Screen">
-        <img src={IdleAvocado} className="Login-Logo" />
+        <img src={IdleAvocado} className="Idle-Avocado" />
         <h2>Login with Google</h2>
         <GoogleLogin
           onSuccess={handleSuccess}

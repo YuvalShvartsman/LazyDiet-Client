@@ -1,16 +1,17 @@
-.Login-Screen{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 30vw;
-    height: 70vh;
-    background-color: var(--forth-color);
-    box-shadow: var(--forth-color) 5px 5px, var(--third-color) 10px 10px, var(--second-color) 15px 15px, var(--first-color) 20px 20px  25px 25px;    border-radius: 5%;
-    }
-
-.Login-Logo{
-    height: 100px;
-    width: 100px;
+.Login-Screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30vw;
+  height: 70vh;
+  background-color: var(--forth-color);
+  box-shadow: var(--forth-color) 5px 5px, var(--third-color) 10px 10px,
+    var(--second-color) 15px 15px, var(--first-color) 20px 20px 25px 25px;
+  border-radius: 5%;
 }
-    
+
+.Idle-Avocado {
+  height: 100px;
+  width: 100px;
+}

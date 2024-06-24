@@ -57,8 +57,6 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
     []
   );
 
-  console.log("data is - ", data);
-
   return (
     <UserPreferencesContext.Provider
       value={{ userPreferences: data, updateUserPreferences }}
