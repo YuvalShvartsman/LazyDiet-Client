@@ -10,15 +10,15 @@ import {
 
 import { User } from "../../types/User";
 
-import db from "../../axiosConfig/axiosInstance";
 import { URLS } from "../../axiosConfig/URLS";
 
 import UserContext from "../../contexts/UserContext";
 
-import Logo from "/avocado.png";
-import { useNavigate } from "react-router-dom";
+import IdleAvocado from "/idleAvocado.gif";
 
 import Swal from "sweetalert2";
+
+import { useSendApiReq } from "../../hooks/useSendApiReq";
 
 type SignInRes = {
   user: User;
@@ -26,22 +26,22 @@ type SignInRes = {
 };
 
 function Login() {
-  const navigate = useNavigate();
   const userContext = useContext(UserContext);
-
-  if (!userContext) {
-    throw new Error("useContext must be used within a UserProvider");
-  }
-
+  const { request } = useSendApiReq<SignInRes>();
   const { updateUser } = userContext;
 
   const handleSuccess = async (response: GoogleCredentialResponse) => {
     try {
-      const res = await db.post<SignInRes>(URLS.SIGN_IN, {
-        token: response.credential,
-      });
-      updateUser(res.data.token);
-      navigate("/");
+      const res = (
+        await request({
+          url: URLS.SIGN_IN,
+          method: "POST",
+          data: {
+            token: response.credential,
+          },
+        })
+      ).data;
+      if (res) updateUser(res.token);
     } catch (error) {
       Swal.fire({
         title: "System Error",
@@ -59,7 +59,7 @@ function Login() {
   return (
     <GoogleOAuthProvider clientId="828545353398-jhc8gosa7j782nj35cd1vtaieqkfjusi.apps.googleusercontent.com">
       <div className="Login-Screen">
-        <img src={Logo} className="Login-Logo" />
+        <img src={IdleAvocado} className="Idle-Avocado" />
         <h2>Login with Google</h2>
         <GoogleLogin
           onSuccess={handleSuccess}

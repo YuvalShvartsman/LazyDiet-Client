@@ -1,16 +1,12 @@
 #root {
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
-.colorScheme{
-
-  background-color: #D8F3DC;
-  background-color: #B7E4C7;
-  background-color: #95D5B2;
-  background-color: #74C69D;
-  background-color: #3DAC78;
-
+:root {
+  --first-color: #D8F3DC;
+  --second-color: #B7E4C7;
+  --third-color: #95D5B2;
+  --forth-color: #74C69D;
+  --fifth-color: #3DAC78;
 }

@@ -1,26 +1,22 @@
 import "./HomePage.css";
 
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 
-import UserContext from "../../contexts/UserContext";
+import userContext from "../../contexts/UserContext";
+import UserPreferencesContext from "../../contexts/UserPreferencesContext";
 
 function HomePage() {
-  const userContext = useContext(UserContext);
+  const user = useContext(userContext);
+  const { userPreferences } = useContext(UserPreferencesContext);
 
-  if (!userContext) {
-    throw new Error("useContext must be used within a UserProvider");
-  }
-  const { user } = userContext;
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!user) navigate("/login");
-  }, []);
+  const { userData } = user;
 
   return (
     <div className="Home-Page">
-      <h1>hello, {user?.name}</h1>
+      <h1>hello, {userData?.name}</h1>
+      <div>
+        <h1>weight:{userPreferences?.weight}</h1>
+      </div>
     </div>
   );
 }
