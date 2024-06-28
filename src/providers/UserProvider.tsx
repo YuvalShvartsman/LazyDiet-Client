@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useContext } from "react";
 
 import UserContext from "../contexts/UserContext";
 
@@ -13,6 +13,7 @@ import { Provider } from "../types/Provider";
 
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
 type DecodedToken = {
   userId: string;
@@ -21,6 +22,7 @@ type DecodedToken = {
 export const UserProvider = ({ children }: Provider) => {
   const navigate = useNavigate();
   const { request, data } = useSendApiReq<User>();
+  const { getUserPreferences } = useContext(UserPreferencesContext);
 
   useEffect(() => {
     const token = Cookies.get("userToken");
@@ -31,10 +33,11 @@ export const UserProvider = ({ children }: Provider) => {
     try {
       const decodedToken: DecodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
-      request({
-        url: URLS.USER_BY_GOOGLE_ID + `${userId}`,
-        method: "GET",
-      });
+      if (userId)
+        request({
+          url: URLS.USER_BY_GOOGLE_ID + `${userId}`,
+          method: "GET",
+        });
     } catch (error) {
       navigate("/login");
       Swal.fire({
@@ -49,6 +52,7 @@ export const UserProvider = ({ children }: Provider) => {
   const updateUser = useCallback((token: string) => {
     Cookies.set("userToken", token, { expires: 1, sameSite: "Strict" });
     getUser(token);
+    getUserPreferences(token);
   }, []);
 
   return (

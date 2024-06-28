@@ -23,8 +23,8 @@ function RouteProvider() {
       <LoadingProvider>
         <NotificationProvider>
           <BrowserRouter>
-            <UserProvider>
-              <UserPreferencesProvider>
+            <UserPreferencesProvider>
+              <UserProvider>
                 <RerouteUserProvider>
                   <Routes>
                     <Route path="/" element={<HomePage />} />
@@ -35,8 +35,8 @@ function RouteProvider() {
                     />
                   </Routes>
                 </RerouteUserProvider>
-              </UserPreferencesProvider>
-            </UserProvider>
+              </UserProvider>
+            </UserPreferencesProvider>
           </BrowserRouter>
         </NotificationProvider>
       </LoadingProvider>

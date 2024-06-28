@@ -7,11 +7,13 @@ interface UserPreferencesContextProps {
     userId: string,
     userPreferences: UserPreferencesType
   ) => void;
+  getUserPreferences: (userId: string) => void;
 }
 
 const initialContextValue = {
   userPreferences: undefined,
   updateUserPreferences: () => {},
+  getUserPreferences: () => {},
 };
 
 const UserPreferencesContext =

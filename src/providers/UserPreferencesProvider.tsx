@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useContext, useEffect } from "react";
 
 import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
@@ -20,18 +20,32 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<UserPreferencesType>();
 
   useEffect(() => {
-    const token = Cookies.get("userToken");
-    if (token) getUserPreferences(token);
+    const userToken = Cookies.get("userToken");
+    if (userToken) {
+      getUserPreferences(userToken);
+    }
   }, []);
+
+  const setUserPreferencesCookies = (userPreferences: UserPreferencesType) => {
+    Cookies.set("userPreferences", JSON.stringify(userPreferences), {
+      expires: 1,
+      sameSite: "Strict",
+    });
+  };
 
   const getUserPreferences = async (token: string) => {
     try {
       const decodedToken: DecodedToken = jwtDecode(token);
       const userId = decodedToken.userId;
-      await request({
-        url: URLS.GET_USER_PREFERENCES + userId,
-        method: "GET",
-      });
+      if (userId) {
+        const res = (
+          await request({
+            url: URLS.GET_USER_PREFERENCES + userId,
+            method: "GET",
+          })
+        ).data;
+        if (res) setUserPreferencesCookies(res);
+      }
     } catch (error) {
       Swal.fire({
         title: "Error!",
@@ -43,16 +57,12 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
 
   const updateUserPreferences = useCallback(
     (userId: string, userPreferences: UserPreferencesType) => {
-      const stringifiedUserPreferences = JSON.stringify(userPreferences);
-      Cookies.set("userPreferences", stringifiedUserPreferences, {
-        expires: 1,
-        sameSite: "Strict",
-      });
       try {
+        setUserPreferencesCookies(userPreferences);
         request({
           url: URLS.USER_PREFERENCES,
           method: "POST",
-          data: { userPreferences, userId: userId },
+          data: { userPreferences, userId },
         });
       } catch (error) {
         Swal.fire({
@@ -67,7 +77,11 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
 
   return (
     <UserPreferencesContext.Provider
-      value={{ userPreferences: data, updateUserPreferences }}
+      value={{
+        userPreferences: data,
+        updateUserPreferences,
+        getUserPreferences,
+      }}
     >
       {children}
     </UserPreferencesContext.Provider>
