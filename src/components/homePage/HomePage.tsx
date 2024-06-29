@@ -1,23 +1,24 @@
 import "./HomePage.css";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import userContext from "../../contexts/UserContext";
-import UserPreferencesContext from "../../contexts/UserPreferencesContext";
+import { Button, Layout } from "antd";
+import SaveMealsModal from "./saveMealsModal/SaveMealsModal";
 
 function HomePage() {
-  const user = useContext(userContext);
-  const { userPreferences } = useContext(UserPreferencesContext);
+  const { userData } = useContext(userContext);
 
-  const { userData } = user;
+  const [isAddMealsOpen, setIsAddMealsOpen] = useState<boolean>(false);
 
   return (
-    <div className="Home-Page">
-      <h1>hello, {userData?.name}</h1>
-      <div>
-        <h1>weight:{userPreferences?.weight}</h1>
-      </div>
-    </div>
+    <Layout className="Home-Page">
+      <h1>Hello, {userData?.name}</h1>
+      <SaveMealsModal isOpen={isAddMealsOpen} setIsOpen={setIsAddMealsOpen} />
+      <Button className="Add-Meals" onClick={() => setIsAddMealsOpen(true)}>
+        Add Meals
+      </Button>
+    </Layout>
   );
 }
 
