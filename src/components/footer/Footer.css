@@ -1,0 +1,14 @@
+.Footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3%;
+  width: 100%;
+  /* z-index: 2; */
+  text-align: center;
+  color: #fff;
+  line-height: 120px;
+  background-color: var(--second-color) !important;
+
+  border-radius: 0 5% 5% 0;
+}

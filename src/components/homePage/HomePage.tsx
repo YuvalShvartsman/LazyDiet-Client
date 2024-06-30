@@ -4,6 +4,10 @@ import { useContext } from "react";
 
 import userContext from "../../contexts/UserContext";
 import UserPreferencesContext from "../../contexts/UserPreferencesContext";
+import { Layout } from "antd";
+import Sidebar from "../sidebar/Sidebar";
+import Navbar from "../navbar/Navbar";
+import Footer from "../footer/Footer";
 
 function HomePage() {
   const user = useContext(userContext);
@@ -12,12 +16,12 @@ function HomePage() {
   const { userData } = user;
 
   return (
-    <div className="Home-Page">
-      <h1>hello, {userData?.name}</h1>
-      <div>
-        <h1>weight:{userPreferences?.weight}</h1>
-      </div>
-    </div>
+    <>
+      <Navbar />
+      <Sidebar />
+      <Layout className="Home-Page"></Layout>
+      <Footer />
+    </>
   );
 }
 

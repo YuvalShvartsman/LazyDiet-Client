@@ -1,0 +1,15 @@
+.Navbar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 12%;
+  width: 100%;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  line-height: 120px;
+  background-color: var(--second-color) !important;
+  box-shadow: var(--fifth-color) 5px 5px, var(--forth-color) 10px 10px,
+    var(--third-color) 15px 15px, var(--second-color) 20px 20px 25px 25px;
+  border-radius: 0 5% 5% 0;
+}
