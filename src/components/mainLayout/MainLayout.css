@@ -1,7 +1,11 @@
 .Layout {
   width: 88%;
   position: absolute;
+  top: 75px;
+  bottom: 20px;
   right: 0;
   display: flex;
   align-items: center;
+  justify-content: center;
+  background-color: var(--first-color);
 }
