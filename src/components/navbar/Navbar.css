@@ -2,14 +2,35 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: 12%;
+  height: 75px;
   width: 100%;
   z-index: 2;
   text-align: center;
   color: #fff;
   line-height: 120px;
   background-color: var(--second-color) !important;
-  box-shadow: var(--fifth-color) 5px 5px, var(--forth-color) 10px 10px,
-    var(--third-color) 15px 15px, var(--second-color) 20px 20px 25px 25px;
-  border-radius: 0 5% 5% 0;
+  box-shadow: var(--fifth-color) 5px 5px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.Navbar-Logo {
+  width: 175px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.System-Name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.Idle-Logo {
+  height: 50px;
+  width: 50px;
 }

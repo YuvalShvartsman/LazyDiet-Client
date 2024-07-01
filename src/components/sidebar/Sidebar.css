@@ -10,5 +10,5 @@
   width: 12%;
   box-shadow: var(--fifth-color) 5px 5px, var(--forth-color) 10px 10px,
     var(--third-color) 15px 15px, var(--second-color) 20px 20px 25px 25px;
-  border-radius: 0 5% 5% 0;
+  border-radius: 0 20px 20px 0;
 }
