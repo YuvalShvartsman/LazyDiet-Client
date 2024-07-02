@@ -9,6 +9,10 @@ import { LuLogOut } from "react-icons/lu";
 
 import IdleAvocado from "/idleAvocado.gif";
 
+import { MdSupportAgent as Support } from "react-icons/md";
+import { FaRegQuestionCircle as About } from "react-icons/fa";
+import { MdOutlineDarkMode as DarkMode } from "react-icons/md";
+
 function Navbar() {
   const { userData } = useContext(UserContext);
 
@@ -19,7 +23,12 @@ function Navbar() {
         <Typography className="System-Name">Lazy Diet</Typography>
       </Layout>
 
-      <Layout className="Navbar-User">
+      <Layout className="Navbar-Info-Section">
+        <Flex className="Navbar-Buttons">
+          <Button className="Navbar-Button" icon={<DarkMode />}></Button>
+          <Button className="Navbar-Button" icon={<Support />}></Button>
+          <Button className="Navbar-Button" icon={<About />}></Button>
+        </Flex>
         <Popover
           title={userData?.name}
           trigger="hover"

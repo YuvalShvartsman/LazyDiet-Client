@@ -18,7 +18,7 @@
   position: absolute;
   left: 0;
   height: 100%;
-  width: 90px;
+  width: 12%;
   text-align: center;
   color: #fff;
   line-height: 120px;
@@ -98,7 +98,7 @@
 /* Media Queries for better responsiveness */
 @media (max-width: 768px) {
   .Sidebar {
-    width: 50px;
+    width: 12%;
   }
 
   .Sidebar-Collapsed {
@@ -120,7 +120,7 @@
 
 @media (max-width: 480px) {
   .Sidebar {
-    width: 40px;
+    width: 12%;
   }
 
   .Sidebar-Collapsed {

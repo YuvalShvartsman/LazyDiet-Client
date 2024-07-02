@@ -13,6 +13,7 @@
 
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .Navbar-Logo {
@@ -23,6 +24,9 @@
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  align-self: flex-start;
+  position: absolute;
+  left: 0;
 }
 
 .System-Name {
@@ -35,8 +39,25 @@
   width: 50px;
 }
 
-.Navbar-User {
-  width: 175px;
+.Navbar-Buttons {
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+}
+
+.Navbar-Button {
+  background-color: transparent;
+  font-size: 25px;
+}
+
+.Navbar-Button :hover,
+.Navbar-Button :focus {
+  background-color: transparent !important;
+  color: var(--first-color) !important;
+}
+
+.Navbar-Info-Section {
+  width: fit-content;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -44,7 +65,7 @@
   justify-content: center;
   background-color: transparent;
   position: absolute;
-  right: 0;
+  right: 30px;
 }
 
 .User-Picture {

@@ -17,7 +17,7 @@ function Sidebar() {
   const checkZoomLevel = () => {
     const zoomLevel = getZoomLevel();
     const screenWidth = window.innerWidth;
-    if (zoomLevel > 150 || screenWidth <= 768) {
+    if (zoomLevel > 150 || screenWidth <= 1050) {
       setCollapsed(true);
     } else {
       setCollapsed(false);
