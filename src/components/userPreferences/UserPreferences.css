@@ -24,7 +24,6 @@
 .User-Preferences-Submit {
   position: absolute;
   left: 0;
-  align-self: center;
   background-color: var(--fifth-color) !important;
   border-color: var(--fifth-color) !important;
 }

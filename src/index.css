@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--first-color) !important;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -26,8 +26,6 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  /* min-width: 320px; */
-  /* min-height: 100vh; */
   overflow: hidden;
 }
 
@@ -66,4 +64,24 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* Custom Scrollbar Styles */
+
+*::-webkit-scrollbar {
+  background-color: var(--second-color) !important;
+  border-radius: 1rem;
+  margin-top: 10px 0 10px 0;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--fifth-color) !important;
+  border-radius: 1rem;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--forth-color) !important;
+  background-clip: padding-box;
 }

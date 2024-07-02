@@ -9,7 +9,7 @@
   color: #fff;
   line-height: 120px;
   background-color: var(--second-color) !important;
-  box-shadow: var(--fifth-color) 5px 5px;
+  box-shadow: var(--fifth-color) 0 5px;
 
   display: flex;
   justify-content: center;

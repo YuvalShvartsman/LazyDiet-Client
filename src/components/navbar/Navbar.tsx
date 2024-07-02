@@ -9,7 +9,6 @@ import IdleAvocado from "/idleAvocado.gif";
 
 function Navbar() {
   const { userData } = useContext(UserContext);
-  console.log(userData?.picture);
 
   return (
     <Layout className="Navbar">
