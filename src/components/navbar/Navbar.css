@@ -47,13 +47,29 @@
   right: 0;
 }
 
-.User-Name {
-  font-size: 14px;
-  margin-left: 4px;
+.User-Picture {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
 }
 
-.User-Picture {
-  height: 25px;
-  width: 25px;
-  border-radius: 50%;
+.Popover-Content {
+  align-items: center;
+}
+
+.Email-Text {
+  font-size: 14px !important;
+}
+
+.Logout-Button {
+  background-color: var(--fifth-color) !important;
+  border-color: var(--fifth-color) !important;
+  margin: 2%;
+}
+
+.Logout-Button :hover,
+.Logout-Button :focus {
+  border-color: var(--fourth-color) !important;
+  background-color: var(--fourth-color) !important;
+  color: var(--first-color) !important;
 }

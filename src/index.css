@@ -73,6 +73,7 @@ button:focus-visible {
   border-radius: 1rem;
   margin-top: 10px 0 10px 0;
   background-clip: padding-box;
+  width: 10px;
 }
 
 *::-webkit-scrollbar-thumb {
