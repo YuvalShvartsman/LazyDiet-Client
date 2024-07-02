@@ -2,10 +2,9 @@ import "./Sidebar.css";
 
 import { useState, useEffect } from "react";
 
-import { Button, Flex, Layout } from "antd";
+import { Button, Layout } from "antd";
 
-import { GiMeal } from "react-icons/gi";
-import { GiProgression } from "react-icons/gi";
+import { GiMeal, GiProgression } from "react-icons/gi";
 import { RiUserStarLine } from "react-icons/ri";
 
 function Sidebar() {
@@ -17,7 +16,8 @@ function Sidebar() {
 
   const checkZoomLevel = () => {
     const zoomLevel = getZoomLevel();
-    if (zoomLevel > 150) {
+    const screenWidth = window.innerWidth;
+    if (zoomLevel > 150 || screenWidth <= 768) {
       setCollapsed(true);
     } else {
       setCollapsed(false);
@@ -35,7 +35,7 @@ function Sidebar() {
 
   return (
     <Layout className={collapsed ? "Sidebar-Collapsed" : "Sidebar"}>
-      <Flex className="Sidebar-Buttons-Layout">
+      <div className="Sidebar-Buttons-Layout">
         <Button
           className={collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"}
         >
@@ -72,7 +72,7 @@ function Sidebar() {
             }
           />
         </Button>
-      </Flex>
+      </div>
     </Layout>
   );
 }

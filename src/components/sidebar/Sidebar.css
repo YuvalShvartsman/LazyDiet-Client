@@ -1,3 +1,4 @@
+/* Base styles */
 .Sidebar {
   position: absolute;
   left: 0;
@@ -29,15 +30,14 @@
 }
 
 .Sidebar-Buttons-Layout {
+  display: flex;
   flex-direction: column;
   align-self: center;
   justify-content: space-evenly;
-
   margin-top: 100px;
   height: 200px !important;
   width: 100%;
   background-color: transparent;
-
   padding: 1px;
   overflow-y: auto !important;
   overflow-x: hidden;
@@ -93,4 +93,49 @@
   font-size: 4vw;
   align-self: center !important;
   justify-self: center !important;
+}
+
+/* Media Queries for better responsiveness */
+@media (max-width: 768px) {
+  .Sidebar {
+    width: 50px;
+  }
+
+  .Sidebar-Collapsed {
+    width: 12%;
+  }
+
+  .Sidebar-Button {
+    font-size: 3vw;
+  }
+
+  .Sidebar-Button-Icon {
+    font-size: 3vw;
+  }
+
+  .Sidebar-Button-Icon-Collapsed {
+    font-size: 5vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .Sidebar {
+    width: 40px;
+  }
+
+  .Sidebar-Collapsed {
+    width: 12%;
+  }
+
+  .Sidebar-Button {
+    font-size: 4vw;
+  }
+
+  .Sidebar-Button-Icon {
+    font-size: 4vw;
+  }
+
+  .Sidebar-Button-Icon-Collapsed {
+    font-size: 6vw;
+  }
 }
