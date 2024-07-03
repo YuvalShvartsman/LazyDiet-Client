@@ -5,6 +5,7 @@ import { Button, Flex, Form, FormProps, Input, Modal, Select } from "antd";
 import IdleAvocado from "/idleAvocado.gif";
 import { Meal } from "../../../types/Meal";
 import { Header } from "antd/es/layout/layout";
+import useGetIngredientsOptions from "../../../hooks/useGetIngredientsOptions";
 
 type SaveMealsModalProps = {
   isOpen: boolean;
@@ -13,6 +14,8 @@ type SaveMealsModalProps = {
 
 function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
   const { Option } = Select;
+  const ingredientsOptions = useGetIngredientsOptions();
+  console.log("🚀 ~ SaveMealsModal ~ ingredientsOptions:", ingredientsOptions);
 
   const handleClose = () => {
     setIsOpen(false);

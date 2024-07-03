@@ -21,7 +21,7 @@ function useGetPreferencesOptions() {
         ).data;
         setPreferencesOptions(res);
       } catch (error) {
-        console.error("Error finding a user", error);
+        console.error("Error, could not find relevent options.", error);
       }
     })();
   }, []);
