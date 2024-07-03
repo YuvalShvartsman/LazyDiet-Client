@@ -33,6 +33,8 @@ function Sidebar() {
     };
   }, []);
 
+  // TODO: create component for buttons and map them.
+
   return (
     <Layout className={collapsed ? "Sidebar-Collapsed" : "Sidebar"}>
       <div className="Sidebar-Buttons-Layout">

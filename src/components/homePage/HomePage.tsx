@@ -1,15 +1,17 @@
 import "./HomePage.css";
 
-import { Layout } from "antd";
+import { Layout, Typography } from "antd";
 
 import MainLayout from "../mainLayout/MainLayout";
-import MonthlyDiet from "./calander/MonthlyDiet";
+import MonthlyDiet from "./calendar/MonthlyDiet";
+import DailyDiet from "./dailyDiet/DailyDiet";
 
 function HomePage() {
   return (
     <MainLayout>
       <Layout className="Home-Page">
-        <MonthlyDiet />
+        {/* <MonthlyDiet /> */}
+        <DailyDiet />
       </Layout>
     </MainLayout>
   );

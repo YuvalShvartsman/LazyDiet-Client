@@ -71,7 +71,7 @@ button:focus-visible {
 *::-webkit-scrollbar {
   background-color: var(--second-color) !important;
   border-radius: 1rem;
-  margin-top: 10px 0 10px 0;
+  margin-top: 10px 5px 10px 5px;
   background-clip: padding-box;
   width: 10px;
 }

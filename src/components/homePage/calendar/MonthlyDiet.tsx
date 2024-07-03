@@ -1,6 +1,6 @@
 import "./MonthlyDiet.css";
 
-import { ConfigProvider, Calendar, CalendarProps } from "antd";
+import { ConfigProvider, Calendar, CalendarProps, Typography } from "antd";
 
 import dayjs, { Dayjs } from "dayjs";
 
@@ -25,6 +25,7 @@ function MonthlyDiet() {
         },
       }}
     >
+      <Typography.Title className="Home-Header">Monthly Diet</Typography.Title>
       <Calendar
         onPanelChange={onPanelChange}
         className="Calendar"

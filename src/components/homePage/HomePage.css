@@ -1,6 +1,6 @@
 .Home-Page {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   width: 70vw;
   height: 70vh;
@@ -9,4 +9,9 @@
     var(--third-color) 15px 15px, var(--second-color) 20px 20px 25px 25px;
   border-radius: 20px;
   margin: 5%;
+}
+
+.Home-Header {
+  font-size: 2vw !important;
+  padding: 2%;
 }
