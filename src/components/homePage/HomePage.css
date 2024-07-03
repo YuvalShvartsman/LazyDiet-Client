@@ -1,6 +1,7 @@
 .Home-Page {
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 70vw;
   height: 70vh;
   background-color: var(--forth-color);

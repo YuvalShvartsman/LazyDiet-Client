@@ -1,0 +1,29 @@
+.Calendar {
+  width: 65vw !important;
+  height: 50vh !important;
+  overflow: auto !important;
+}
+
+.Calendar .ant-radio-button-wrapper,
+.Calendar .ant-select {
+  display: none !important;
+}
+/* Removing the buttons responsible for picking month/year. */
+
+.ant-picker-calendar .ant-picker-cell-selected .ant-picker-calendar-date {
+  background-color: var(--third-color) !important;
+  color: #000000 !important;
+}
+
+.ant-picker-calendar
+  .ant-picker-cell-selected
+  .ant-picker-calendar-date
+  .ant-picker-calendar-date-value {
+  color: var(--fifth-color) !important;
+}
+/* Making the active text black */
+
+.ant-picker-calendar-date-today {
+  border-top: 3px solid var(--fifth-color) !important;
+}
+/* Making the line indicator for the current date green instead of blue*/
