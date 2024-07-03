@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 
-import { Button, Flex, Layout, Popover, Typography } from "antd";
+import { Button, Flex, Layout, Popover, Tooltip, Typography } from "antd";
 
 import { LuLogOut } from "react-icons/lu";
 
@@ -29,6 +29,7 @@ function Navbar() {
           <Button className="Navbar-Button" icon={<Support />}></Button>
           <Button className="Navbar-Button" icon={<About />}></Button>
         </Flex>
+
         <Popover
           title={userData?.name}
           trigger="hover"
@@ -37,9 +38,11 @@ function Navbar() {
               <Typography.Text ellipsis className="Email-Text">
                 {userData?.email}
               </Typography.Text>
-              <Button className="Logout-Button">
-                <LuLogOut color="white" />
-              </Button>
+              <Tooltip title="Logout">
+                <Button className="Logout-Button">
+                  <LuLogOut color="white" />
+                </Button>
+              </Tooltip>
             </Flex>
           }
         >
