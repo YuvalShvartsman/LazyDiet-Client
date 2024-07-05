@@ -15,7 +15,6 @@ type SaveMealsModalProps = {
 function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
   const { Option } = Select;
   const ingredientsOptions = useGetIngredientsOptions();
-  console.log("🚀 ~ SaveMealsModal ~ ingredientsOptions:", ingredientsOptions);
 
   const handleClose = () => {
     setIsOpen(false);
