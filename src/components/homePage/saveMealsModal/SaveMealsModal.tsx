@@ -1,11 +1,27 @@
 import "./SaveMealsModal.css";
 
-import { Button, Flex, Form, FormProps, Input, Modal, Select } from "antd";
+import { useCallback, useState } from "react";
+
+import {
+  AutoComplete,
+  Button,
+  Flex,
+  Form,
+  FormProps,
+  Input,
+  Modal,
+} from "antd";
+import { Header } from "antd/es/layout/layout";
 
 import IdleAvocado from "/idleAvocado.gif";
+
 import { Meal } from "../../../types/Meal";
-import { Header } from "antd/es/layout/layout";
-import useGetIngredientsOptions from "../../../hooks/useGetIngredientsOptions";
+import { Ingredient } from "../../../types/Ingredient";
+import { Nutrient } from "../../../types/Nutrient";
+
+import debounce from "lodash.debounce";
+
+import db from "../../../axiosConfig/axiosInstance";
 
 type SaveMealsModalProps = {
   isOpen: boolean;
@@ -13,9 +29,6 @@ type SaveMealsModalProps = {
 };
 
 function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
-  const { Option } = Select;
-  const ingredientsOptions = useGetIngredientsOptions();
-
   const handleClose = () => {
     setIsOpen(false);
   };
@@ -26,6 +39,41 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
 
   const onFinishFailed: FormProps<Meal>["onFinishFailed"] = (errorInfo) => {
     console.log("Failed:", errorInfo);
+  };
+
+  const [options, setOptions] = useState<{ value: string; label: string }[]>(
+    []
+  );
+  const [nutrients, setNutrients] = useState<Nutrient[]>([]);
+
+  const fetchIngredients = async (value: string) => {
+    if (value) {
+      const response = await db.get<Ingredient[]>(
+        `/ingredients/search-ingredients/${value}`
+      );
+      console.log(response.data);
+      setOptions(
+        response.data.map((ingredient) => ({
+          value: ingredient._id,
+          label: ingredient.ingredient_description,
+        }))
+      );
+    } else {
+      setOptions([]);
+    }
+  };
+
+  const debouncedFetch = useCallback(debounce(fetchIngredients, 300), []);
+
+  const handleSearch = (value: string) => {
+    debouncedFetch(value);
+  };
+
+  const handleSelect = async (value: string) => {
+    const response = await db.get<{ nutrients: Nutrient[] }>(
+      `/ingredient-nutrients/${value}`
+    );
+    setNutrients(response.data.nutrients);
   };
 
   const ingredients = ["banana", "avocado", "Egg"];
@@ -64,16 +112,30 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
             valuePropName="goal"
             rules={[{ required: true, message: "Please enter your goals!" }]}
           >
-            <Select
-              placeholder="Select a option and change input text above"
-              allowClear
+            <AutoComplete
+              options={options}
+              onSearch={handleSearch}
+              onSelect={handleSelect}
+              style={{ width: 200 }}
             >
-              {ingredients.map((ingredient) => (
-                <Option value={ingredient} key={"ingredient - " + ingredient}>
-                  {ingredient}
-                </Option>
-              ))}
-            </Select>
+              <Input.Search placeholder="Search Ingredients" />
+            </AutoComplete>
+
+            {nutrients.length > 0 && (
+              <div>
+                <h3>Nutrients</h3>
+                <ul>
+                  {nutrients.map((nutrient) => (
+                    <li key={nutrient._id}>
+                      {nutrient.nutrientsNames
+                        .map((name) => name.name)
+                        .join(", ")}
+                      : {nutrient.amount}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </Form.Item>
 
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

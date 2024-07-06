@@ -1,8 +1,9 @@
-import { NutritionalValue } from "./NutritionalValue";
+import { Nutrient } from "./Nutrient";
 
 export type Ingredient = {
-  "Ingredient description": string;
+  _id: string;
+  ingredient_description: string;
   amount: number;
-  "FDC ID": number;
-  nurtritionalValue: NutritionalValue;
+  fdc_id: number;
+  nurtritionalValue: Nutrient;
 };
