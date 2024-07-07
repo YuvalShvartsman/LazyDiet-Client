@@ -5,5 +5,5 @@ export type Ingredient = {
   ingredient_description: string;
   amount: number;
   fdc_id: number;
-  nurtritionalValue: Nutrient;
+  nurtrients?: Nutrient[];
 };
