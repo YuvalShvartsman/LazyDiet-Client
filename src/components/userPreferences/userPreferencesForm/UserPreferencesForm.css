@@ -1,0 +1,52 @@
+.User-Preferences-Form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-self: center;
+  min-width: 90% !important;
+  height: 100%;
+  padding: 10px;
+}
+
+.IsRows {
+  margin: auto;
+}
+
+.Field-Container-Row {
+  justify-content: space-between;
+  width: 75%;
+  align-self: center;
+}
+
+.Field-Container-Center {
+  justify-content: center;
+  width: 75%;
+  align-self: center;
+}
+
+.Checkbox-Row {
+  position: absolute;
+  left: 0;
+  width: fit-content;
+}
+
+.User-Preferences-Submit {
+  position: absolute;
+  left: 0;
+  background-color: var(--fifth-color) !important;
+  border-color: var(--fifth-color) !important;
+}
+
+.User-Preferences-Submit:hover,
+.User-Preferences-Submit:focus {
+  border-color: var(--fourth-color);
+  background-color: var(--fourth-color) !important;
+  color: var(--first-color) !important;
+}
+
+.Idle-Avocado {
+  width: 100px !important;
+  height: 100px !important;
+  align-self: center;
+  margin-bottom: 5%;
+}

@@ -11,33 +11,3 @@
     var(--second-color) 15px 15px, var(--first-color) 20px 20px 25px 25px;
   border-radius: 20px;
 }
-
-.User-Preferences-Form {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-self: center;
-  min-width: 90% !important;
-  height: fit-content;
-}
-
-.User-Preferences-Submit {
-  position: absolute;
-  left: 0;
-  background-color: var(--fifth-color) !important;
-  border-color: var(--fifth-color) !important;
-}
-
-.User-Preferences-Submit:hover,
-.User-Preferences-Submit:focus {
-  border-color: var(--fourth-color);
-  background-color: var(--fourth-color) !important;
-  color: var(--first-color) !important;
-}
-
-.Idle-Avocado {
-  width: 100px !important;
-  height: 100px !important;
-  align-self: center;
-  margin-bottom: 5%;
-}
