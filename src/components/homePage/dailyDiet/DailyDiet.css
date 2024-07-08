@@ -3,10 +3,9 @@
   height: 100%;
 }
 
-.General-Data {
-  align-self: center;
-  font-weight: 400;
-  align-items: center;
+.Daily-Plan-Header {
+  font-size: 38px !important;
+  font-weight: bold !important;
 }
 
 .Meals {
@@ -24,7 +23,9 @@
 }
 
 .Meal-Panel {
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: var(--third-color);
 }
 
 .Ingredient-List {
@@ -35,8 +36,8 @@
 
 .Ingredient-List .ant-list-item {
   display: flex;
-  background-color: var(--third-color);
-  margin: 5px;
+  background-color: var(--second-color);
+  margin: 10px;
 }
 
 .Ingredient-Logo {
@@ -46,5 +47,5 @@
   height: 50px !important;
   width: 50px !important;
   background-color: var(--fifth-color);
-  padding: none;
+  margin-left: 10px;
 }

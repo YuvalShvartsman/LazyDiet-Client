@@ -2,10 +2,9 @@ import "./DailyDiet.css";
 import { Image, Collapse, Flex, List, Typography } from "antd";
 
 import Avocado from "/avocado.png";
+import MacrosDisplay from "../../macrosDisplay/MacrosDisplay";
 
 const { Panel } = Collapse;
-
-type MealMacros = "protein" | "carbs" | "calories";
 
 function DailyDiet() {
   const meals: any = [
@@ -40,40 +39,26 @@ function DailyDiet() {
     },
   ]; //TODO: switch any to Meal[] type from other branch
 
-  let generalMealsMacros = { protein: 140, carbs: 60, calories: 1900 };
+  let mealMacros = { protein: 140, carbs: 60, calories: 1900 };
 
   return (
     <Flex className="Daily-Plan" vertical>
       <Typography.Title className="Daily-Plan-Header">
-        Today's Plan
+        Today's Menu
       </Typography.Title>
-      <Flex className="General-Data" gap={5}>
-        <Typography.Text strong>Macros:</Typography.Text>
-        {Object.entries(generalMealsMacros).map(([key, value]) => (
-          <Typography.Text key={key}>
-            {key + ": " + value + "gr"}
-          </Typography.Text>
-        ))}
-      </Flex>
+
+      <MacrosDisplay mealMacros={mealMacros} />
 
       <Flex className="Meals">
         <Collapse className="Meals-Accordion" bordered={false}>
           {meals.map((meal: any, index: number) => (
             <Panel header={meal.mealName} key={index} className="Meal-Panel">
               <Flex vertical>
-                <Flex className="General-Data" gap={5}>
-                  <Typography.Text strong>Macros:</Typography.Text>
-                  {Object.entries(meal.mealMacros).map(([key, value]) => (
-                    <Typography.Text>
-                      {key + ": " + value + "gr"}
-                    </Typography.Text>
-                  ))}
-                </Flex>
-
+                <MacrosDisplay mealMacros={mealMacros} />
                 {meal.ingredients.length > 0 && (
                   <List
                     className="Ingredient-List"
-                    header="Ingredients"
+                    header="Ingredients:"
                     itemLayout="horizontal"
                     dataSource={meal.ingredients}
                     renderItem={(item: any, index) => (
@@ -85,16 +70,7 @@ function DailyDiet() {
                           }
                           title={<Typography.Text>{item.name}</Typography.Text>}
                           description={
-                            <Flex className="General-Data" gap={5}>
-                              <Typography.Text strong>Macros:</Typography.Text>
-                              {Object.entries(generalMealsMacros).map(
-                                ([key, value]) => (
-                                  <Typography.Text key={key}>
-                                    {key + ": " + value + "gr"}
-                                  </Typography.Text>
-                                )
-                              )}
-                            </Flex>
+                            <MacrosDisplay mealMacros={mealMacros} />
                           }
                         />
                       </List.Item>
