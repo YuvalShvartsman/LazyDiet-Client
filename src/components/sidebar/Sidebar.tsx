@@ -6,9 +6,13 @@ import { Button, Layout } from "antd";
 
 import { GiMeal, GiProgression } from "react-icons/gi";
 import { RiUserStarLine } from "react-icons/ri";
+import UserPreferencesModal from "../userPreferencesModal/UserPreferencesModal";
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
 
   const getZoomLevel = () => {
     return Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -37,6 +41,8 @@ function Sidebar() {
 
   return (
     <Layout className={collapsed ? "Sidebar-Collapsed" : "Sidebar"}>
+      <UserPreferencesModal open={open} handleClose={handleClose} />
+
       <div className="Sidebar-Buttons-Layout">
         <Button
           className={collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"}
@@ -63,6 +69,7 @@ function Sidebar() {
           />
         </Button>
         <Button
+          onClick={() => setOpen(true)}
           className={collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"}
         >
           {!collapsed && "Preferences"}&nbsp;
