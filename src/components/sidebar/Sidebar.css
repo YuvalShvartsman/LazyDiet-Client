@@ -26,7 +26,6 @@
   z-index: 1;
   box-shadow: var(--fifth-color) 5px 5px, var(--forth-color) 10px 10px,
     var(--third-color) 15px 15px;
-  /* border-radius: 0 20px 20px 0; */
 }
 
 .Sidebar-Buttons-Layout {
@@ -53,6 +52,12 @@
   font-size: 1.2vw;
   display: flex;
   align-items: center;
+}
+
+.focus {
+  border-color: var(--fifth-color);
+  background-color: var(--fifth-color) !important;
+  color: var(--first-color) !important;
 }
 
 .Sidebar-Button:hover,

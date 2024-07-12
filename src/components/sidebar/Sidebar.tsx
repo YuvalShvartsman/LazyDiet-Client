@@ -20,17 +20,17 @@ function Sidebar() {
 
   const navbarButtons: Omit<SidebarButtonProps, "collapsed">[] = [
     {
-      componentToDisplay: "DailyMenu",
+      componentToSwitchTo: "DailyMenu",
       text: "Today'd Menu",
       Icon: GiMeal,
     },
     {
-      componentToDisplay: "MonthlyDiet",
+      componentToSwitchTo: "MonthlyDiet",
       text: "Month's Plan",
       Icon: GiMeal,
     },
     {
-      componentToDisplay: "ProgressChart",
+      componentToSwitchTo: "ProgressChart",
       text: "Track Progress",
       Icon: GiProgression,
     },
@@ -77,7 +77,7 @@ function Sidebar() {
           <SideBarButton
             key={btn.text}
             collapsed={collapsed}
-            componentToDisplay={btn.componentToDisplay}
+            componentToSwitchTo={btn.componentToSwitchTo}
             text={btn.text}
             Icon={btn.Icon}
             onClickFunction={btn.onClickFunction}

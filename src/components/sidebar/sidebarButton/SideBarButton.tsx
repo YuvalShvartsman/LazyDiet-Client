@@ -11,7 +11,7 @@ import { ComponentsToDisplay } from "../../../types/componentsToDisplay";
 import { IconType } from "react-icons";
 
 export type SidebarButtonProps = {
-  componentToDisplay?: ComponentsToDisplay;
+  componentToSwitchTo?: ComponentsToDisplay;
   onClickFunction?: () => void;
   collapsed: boolean;
   text: string;
@@ -20,18 +20,23 @@ export type SidebarButtonProps = {
 
 function SideBarButton({
   collapsed,
-  componentToDisplay,
+  componentToSwitchTo,
   onClickFunction,
   text,
   Icon,
 }: SidebarButtonProps) {
-  const { setComponentToDisplay } = useContext(HomeDisplayContext);
+  const { componentToDisplay, setComponentToDisplay } =
+    useContext(HomeDisplayContext);
+
+  console.log(componentToDisplay);
 
   return (
     <Button
-      className={collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"}
+      className={`${
+        collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"
+      } ${componentToSwitchTo === componentToDisplay ? "focus" : ""}`} // Important to check which component is currently displayed to make it focused
       onClick={() => {
-        componentToDisplay && setComponentToDisplay(componentToDisplay);
+        componentToSwitchTo && setComponentToDisplay(componentToSwitchTo);
         onClickFunction && onClickFunction();
       }}
     >
