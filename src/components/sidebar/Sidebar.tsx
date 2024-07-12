@@ -2,17 +2,48 @@ import "./Sidebar.css";
 
 import { useState, useEffect } from "react";
 
-import { Button, Layout } from "antd";
+import { Layout } from "antd";
 
 import { GiMeal, GiProgression } from "react-icons/gi";
 import { RiUserStarLine } from "react-icons/ri";
 import UserPreferencesModal from "../userPreferencesModal/UserPreferencesModal";
+
+import SideBarButton, {
+  SidebarButtonProps,
+} from "./sidebarButton/SideBarButton";
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
+
+  const navbarButtons: Omit<SidebarButtonProps, "collapsed">[] = [
+    {
+      componentToDisplay: "DailyMenu",
+      text: "Today'd Menu",
+      Icon: GiMeal,
+    },
+    {
+      componentToDisplay: "MonthlyDiet",
+      text: "Month's Plan",
+      Icon: GiMeal,
+    },
+    {
+      componentToDisplay: "ProgressChart",
+      text: "Track Progress",
+      Icon: GiProgression,
+    },
+    {
+      text: "Add Meals",
+      Icon: GiMeal,
+    },
+    {
+      text: "Preferences",
+      Icon: RiUserStarLine,
+      onClickFunction: () => setOpen(true),
+    },
+  ];
 
   const getZoomLevel = () => {
     return Math.round((window.outerWidth / window.innerWidth) * 100);
@@ -37,50 +68,21 @@ function Sidebar() {
     };
   }, []);
 
-  // TODO: create component for buttons and map them.
-
   return (
     <Layout className={collapsed ? "Sidebar-Collapsed" : "Sidebar"}>
       <UserPreferencesModal open={open} handleClose={handleClose} />
 
       <div className="Sidebar-Buttons-Layout">
-        <Button
-          className={collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"}
-        >
-          {!collapsed && "Track Progress"} &nbsp;
-          <GiProgression
-            className={
-              collapsed
-                ? "Sidebar-Button-Icon-Collapsed"
-                : "Sidebar-Button-Icon"
-            }
+        {navbarButtons.map((btn) => (
+          <SideBarButton
+            key={btn.text}
+            collapsed={collapsed}
+            componentToDisplay={btn.componentToDisplay}
+            text={btn.text}
+            Icon={btn.Icon}
+            onClickFunction={btn.onClickFunction}
           />
-        </Button>
-        <Button
-          className={collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"}
-        >
-          {!collapsed && "Add Meals"} &nbsp;
-          <GiMeal
-            className={
-              collapsed
-                ? "Sidebar-Button-Icon-Collapsed"
-                : "Sidebar-Button-Icon"
-            }
-          />
-        </Button>
-        <Button
-          onClick={() => setOpen(true)}
-          className={collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"}
-        >
-          {!collapsed && "Preferences"}&nbsp;
-          <RiUserStarLine
-            className={
-              collapsed
-                ? "Sidebar-Button-Icon-Collapsed"
-                : "Sidebar-Button-Icon"
-            }
-          />
-        </Button>
+        ))}
       </div>
     </Layout>
   );
