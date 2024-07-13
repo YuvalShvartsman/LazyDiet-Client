@@ -1,0 +1,146 @@
+/* Base styles */
+.Sidebar {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 12%;
+  text-align: center;
+  color: #fff;
+  line-height: 120px;
+  background-color: var(--third-color) !important;
+  z-index: 1;
+  box-shadow: var(--fifth-color) 5px 5px, var(--forth-color) 10px 10px,
+    var(--third-color) 15px 15px;
+  /* border-radius: 0 20px 20px 0; */
+}
+
+.Sidebar-Collapsed {
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 12%;
+  text-align: center;
+  color: #fff;
+  line-height: 120px;
+  background-color: var(--third-color) !important;
+  z-index: 1;
+  box-shadow: var(--fifth-color) 5px 5px, var(--forth-color) 10px 10px,
+    var(--third-color) 15px 15px;
+}
+
+.Sidebar-Buttons-Layout {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: space-evenly;
+  margin-top: 100px;
+  height: 200px !important;
+  width: 100%;
+  background-color: transparent;
+  padding: 1px;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+
+.Sidebar-Button {
+  align-self: center;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none;
+  width: 100% !important;
+  height: 20%;
+  font-size: 1.2vw;
+  display: flex;
+  align-items: center;
+}
+
+.Focus {
+  border-color: var(--fifth-color);
+  background-color: var(--fifth-color) !important;
+  color: var(--first-color) !important;
+}
+
+.Sidebar-Button:hover,
+.Sidebar-Button:focus {
+  border-color: var(--fifth-color);
+  background-color: var(--fifth-color) !important;
+  color: var(--first-color) !important;
+}
+
+.Sidebar-Button-Collapsed {
+  align-self: center;
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none;
+  width: 100% !important;
+  height: 20%;
+  font-size: 1.2vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Sidebar-Button-Collapsed:hover,
+.Sidebar-Button-Collapsed:focus {
+  border-color: var(--fifth-color);
+  background-color: var(--fifth-color) !important;
+  color: var(--first-color) !important;
+}
+
+.Sidebar-Button-Icon {
+  position: absolute;
+  right: 12px;
+  margin-left: 2px;
+  font-size: 1.2vw;
+}
+
+.Sidebar-Button-Icon-Collapsed {
+  font-size: 4vw;
+  align-self: center !important;
+  justify-self: center !important;
+}
+
+/* Media Queries for better responsiveness */
+@media (max-width: 768px) {
+  .Sidebar {
+    width: 12%;
+  }
+
+  .Sidebar-Collapsed {
+    width: 12%;
+  }
+
+  .Sidebar-Button {
+    font-size: 3vw;
+  }
+
+  .Sidebar-Button-Icon {
+    font-size: 3vw;
+  }
+
+  .Sidebar-Button-Icon-Collapsed {
+    font-size: 5vw;
+  }
+}
+
+@media (max-width: 480px) {
+  .Sidebar {
+    width: 12%;
+  }
+
+  .Sidebar-Collapsed {
+    width: 12%;
+  }
+
+  .Sidebar-Button {
+    font-size: 4vw;
+  }
+
+  .Sidebar-Button-Icon {
+    font-size: 4vw;
+  }
+
+  .Sidebar-Button-Icon-Collapsed {
+    font-size: 5vw;
+  }
+}

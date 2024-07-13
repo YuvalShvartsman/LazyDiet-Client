@@ -1,28 +1,33 @@
 import "./UserPreferences.css";
 
-import { useContext } from "react";
-
-import type { FormProps } from "antd";
-import { Button, Checkbox, Form, Input, Select, Flex } from "antd";
-
-import UserPreferencesContext from "../../contexts/UserPreferencesContext";
-import UserContext from "../../contexts/UserContext";
-
-import useGetPreferencesOptions from "../../hooks/useGetPreferencesOptions";
-
-import { UserPreferencesType } from "../../types/UserPreferences";
+import { Button, Checkbox, Flex, Form, FormProps, Input, Select } from "antd";
 
 import IdleAvocado from "/idleAvocado.gif";
 
-function UserPreferences() {
+import { UserPreferencesType } from "../../types/UserPreferences";
+
+import { useContext } from "react";
+import UserContext from "../../contexts/UserContext";
+import UserPreferencesContext from "../../contexts/UserPreferencesContext";
+
+import useGetPreferencesOptions from "../../hooks/useGetPreferencesOptions";
+
+type UserPreferencesProps = {
+  handleClose?: () => void;
+};
+
+function UserPreferences({ handleClose }: UserPreferencesProps) {
   const { Option } = Select;
   const { userData } = useContext(UserContext);
-  const { updateUserPreferences } = useContext(UserPreferencesContext);
+  const { updateUserPreferences, userPreferences } = useContext(
+    UserPreferencesContext
+  );
 
   const options = useGetPreferencesOptions();
 
   const onFinish: FormProps<UserPreferencesType>["onFinish"] = (values) => {
     if (userData?._id) updateUserPreferences(userData._id, values);
+    handleClose?.();
   };
 
   const onFinishFailed: FormProps<UserPreferencesType>["onFinishFailed"] = (
@@ -30,20 +35,20 @@ function UserPreferences() {
   ) => {
     console.log("Failed:", errorInfo);
   };
-
   return (
     <Flex className="User-Preferences-Component">
       <Form
-        className="User-Preferences-Form"
+        className={"User-Preferences-Form"}
         name="UserPreferences"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
+        initialValues={userPreferences}
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
         <img src={IdleAvocado} className="Idle-Avocado" />
+
         <Form.Item<UserPreferencesType>
           label="Weight:"
           name="weight"
@@ -81,10 +86,7 @@ function UserPreferences() {
           valuePropName="goal"
           rules={[{ required: true, message: "Please enter your goals!" }]}
         >
-          <Select
-            placeholder="Select a option and change input text above"
-            allowClear
-          >
+          <Select placeholder="Please Select your current goal" allowClear>
             {options?.goals &&
               options.goals.map((goal) => (
                 <Option value={goal._id} key={"goal - " + goal._id}>
@@ -95,7 +97,7 @@ function UserPreferences() {
         </Form.Item>
 
         <Form.Item
-          label="Meals per day:"
+          label="Meals:"
           name="amountOfMeals"
           rules={[
             { required: true, message: "Dont be shy, put some more!" },
@@ -119,10 +121,7 @@ function UserPreferences() {
           label="Diet preference:"
           name="dietType"
         >
-          <Select
-            placeholder="Select a option and change input text above"
-            allowClear
-          >
+          <Select placeholder="Please Select your diet type" allowClear>
             {options?.dietTypes &&
               options.dietTypes.map((diet) => (
                 <Option value={diet._id} key={"diet -" + diet._id}>
@@ -136,10 +135,7 @@ function UserPreferences() {
           label="Sensitivities"
           name="sensitivities"
         >
-          <Select
-            placeholder="Select a option and change input text above"
-            allowClear
-          >
+          <Select placeholder="Please pick one if you are allergic" allowClear>
             {options?.sensitivities &&
               options.sensitivities.map((sensitivity) => (
                 <Option
@@ -155,11 +151,12 @@ function UserPreferences() {
         <Form.Item<UserPreferencesType>
           name="suggestFoods"
           valuePropName="checked"
-          wrapperCol={{ offset: 8, span: 16 }}
+          wrapperCol={{ offset: 10, span: 16 }}
         >
           <Checkbox>Suggest pre-made meals</Checkbox>
         </Form.Item>
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+
+        <Form.Item wrapperCol={{ offset: 10, span: 16 }}>
           <Button className="User-Preferences-Submit" htmlType="submit">
             Submit
           </Button>

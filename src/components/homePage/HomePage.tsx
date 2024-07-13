@@ -1,23 +1,33 @@
 import "./HomePage.css";
 
-import { useContext } from "react";
+import { Layout } from "antd";
 
-import userContext from "../../contexts/UserContext";
-import UserPreferencesContext from "../../contexts/UserPreferencesContext";
+import MainLayout from "../mainLayout/MainLayout";
+import MonthlyDiet from "./calendar/MonthlyDiet";
+import ProgressChart from "./progressChart/ProgressChart";
+import DailyDiet from "./dailyDiet/DailyDiet";
+
+import { useContext } from "react";
+import HomeDisplayContext from "../../contexts/HomeDisplayContext";
 
 function HomePage() {
-  const user = useContext(userContext);
-  const { userPreferences } = useContext(UserPreferencesContext);
+  const { componentToDisplay } = useContext(HomeDisplayContext);
 
-  const { userData } = user;
+  const pickComponentToDisplay = () => {
+    switch (componentToDisplay) {
+      case "DailyMenu":
+        return <DailyDiet />;
+      case "MonthlyDiet":
+        return <MonthlyDiet />;
+      case "ProgressChart":
+        return <ProgressChart />;
+    }
+  };
 
   return (
-    <div className="Home-Page">
-      <h1>hello, {userData?.name}</h1>
-      <div>
-        <h1>weight:{userPreferences?.weight}</h1>
-      </div>
-    </div>
+    <MainLayout>
+      <Layout className="Home-Page">{pickComponentToDisplay()}</Layout>
+    </MainLayout>
   );
 }
 
