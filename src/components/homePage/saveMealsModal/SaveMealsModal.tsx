@@ -1,5 +1,7 @@
 import "./SaveMealsModal.css";
+
 import { useCallback, useState } from "react";
+
 import {
   AutoComplete,
   Button,
@@ -9,25 +11,23 @@ import {
   Input,
   Modal,
   Tag,
+  Typography,
 } from "antd";
-import { Header } from "antd/es/layout/layout";
-import IdleAvocado from "/idleAvocado.gif";
+
 import { Meal } from "../../../types/Meal";
 import { Ingredient } from "../../../types/Ingredient";
-import { Nutrient } from "../../../types/Nutrient";
+
 import debounce from "lodash.debounce";
 import db from "../../../axiosConfig/axiosInstance";
 
+import IdleAvocado from "/idleAvocado.gif";
+
 type SaveMealsModalProps = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  open: boolean;
+  handleClose: () => void;
 };
 
-function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
-  const handleClose = () => {
-    setIsOpen(false);
-  };
-
+function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   const onFinish: FormProps<Meal>["onFinish"] = (values) => {
     const mealWithIngredients = {
       ...values,
@@ -94,9 +94,14 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
   };
 
   return (
-    <Modal open={isOpen} onClose={handleClose}>
-      <img src={IdleAvocado} className="Idle-Avocado" />
-      <Header>Add a meal</Header>
+    <Modal
+      className="Add-Meal-Modal"
+      open={open}
+      onClose={handleClose}
+      onCancel={handleClose}
+      onOk={handleClose}
+      footer={false}
+    >
       <Flex className="User-Preferences-Component">
         <Form
           className="Create-Meal-Form"
@@ -108,6 +113,12 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
+          <Flex className="Header">
+            <Typography className="Header-Text">
+              Add a meal to your personal menu
+            </Typography>
+            <img src={IdleAvocado} className="Header-Avocado" />
+          </Flex>
           <Form.Item<Meal>
             label="Meal name:"
             name="mealName"

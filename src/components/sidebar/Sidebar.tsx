@@ -11,12 +11,16 @@ import UserPreferencesModal from "../userPreferencesModal/UserPreferencesModal";
 import SideBarButton, {
   SidebarButtonProps,
 } from "./sidebarButton/SideBarButton";
+import SaveMealsModal from "../homePage/saveMealsModal/SaveMealsModal";
 
 function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
+  const [openPreferences, setOpenPreferences] = useState(false);
+  const handlePreferencesClose = () => setOpenPreferences(false);
+
+  const [openAddMeals, setOpenAddMeals] = useState(false);
+  const handleAddMealsClose = () => setOpenAddMeals(false);
 
   const navbarButtons: Omit<SidebarButtonProps, "collapsed">[] = [
     {
@@ -37,11 +41,12 @@ function Sidebar() {
     {
       text: "Add Meals",
       Icon: GiMeal,
+      onClickFunction: () => setOpenAddMeals(true),
     },
     {
       text: "Preferences",
       Icon: RiUserStarLine,
-      onClickFunction: () => setOpen(true),
+      onClickFunction: () => setOpenPreferences(true),
     },
   ];
 
@@ -70,7 +75,11 @@ function Sidebar() {
 
   return (
     <Layout className={collapsed ? "Sidebar-Collapsed" : "Sidebar"}>
-      <UserPreferencesModal open={open} handleClose={handleClose} />
+      <SaveMealsModal open={openAddMeals} handleClose={handleAddMealsClose} />
+      <UserPreferencesModal
+        open={openPreferences}
+        handleClose={handlePreferencesClose}
+      />
 
       <div className="Sidebar-Buttons-Layout">
         {navbarButtons.map((btn) => (

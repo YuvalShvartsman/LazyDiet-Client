@@ -1,0 +1,17 @@
+.Header {
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  margin: 20px !important;
+}
+
+.Header-Text {
+  text-align: center;
+  font-size: 16px !important;
+  color: var(--first-color);
+}
+
+.Header-Avocado {
+  width: 30px !important;
+  height: 30px !important;
+}
