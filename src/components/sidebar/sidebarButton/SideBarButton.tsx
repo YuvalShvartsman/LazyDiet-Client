@@ -28,13 +28,11 @@ function SideBarButton({
   const { componentToDisplay, setComponentToDisplay } =
     useContext(HomeDisplayContext);
 
-  console.log(componentToDisplay);
-
   return (
     <Button
       className={`${
         collapsed ? "Sidebar-Button-Collapsed" : "Sidebar-Button"
-      } ${componentToSwitchTo === componentToDisplay ? "focus" : ""}`} // Important to check which component is currently displayed to make it focused
+      } ${componentToSwitchTo === componentToDisplay ? "Focus" : ""}`} // Important to check which component is currently displayed to make it focused
       onClick={() => {
         componentToSwitchTo && setComponentToDisplay(componentToSwitchTo);
         onClickFunction && onClickFunction();

@@ -54,7 +54,7 @@
   align-items: center;
 }
 
-.focus {
+.Focus {
   border-color: var(--fifth-color);
   background-color: var(--fifth-color) !important;
   color: var(--first-color) !important;
