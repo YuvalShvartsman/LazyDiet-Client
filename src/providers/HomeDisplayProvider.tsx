@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import UserContext from "../contexts/UserContext";
-
 import { Provider } from "../types/Provider";
 
 import HomeDisplayContext from "../contexts/HomeDisplayContext";
