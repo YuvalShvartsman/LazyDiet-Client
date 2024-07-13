@@ -1,4 +1,7 @@
+import "./UserPreferencesModal.css";
+
 import { Modal } from "antd";
+
 import UserPreferences from "../userPreferences/UserPreferences";
 
 type UserPreferencesModalType = {

@@ -21,6 +21,7 @@ import debounce from "lodash.debounce";
 import db from "../../../axiosConfig/axiosInstance";
 
 import IdleAvocado from "/idleAvocado.gif";
+import TextArea from "antd/es/input/TextArea";
 
 type SaveMealsModalProps = {
   open: boolean;
@@ -33,7 +34,6 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
       ...values,
       ingredients: selectedIngredients,
     };
-    console.log(mealWithIngredients);
   };
 
   const onFinishFailed: FormProps<Meal>["onFinishFailed"] = (errorInfo) => {
@@ -53,7 +53,6 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
       const response = await db.get<Ingredient[]>(
         `/ingredients/search-ingredients/${value}`
       );
-      console.log(response.data);
       setOptions(
         response.data.map((ingredient) => ({
           value: ingredient._id,
@@ -120,7 +119,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
             <img src={IdleAvocado} className="Header-Avocado" />
           </Flex>
           <Form.Item<Meal>
-            label="Meal name:"
+            label="Meal Name:"
             name="mealName"
             rules={[
               {
@@ -130,6 +129,15 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
             ]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item<Meal> label="Meal Description:" name="description">
+            <TextArea placeholder="Please elaborate on this meal." />
+          </Form.Item>
+          <Form.Item<Meal> label="How to Prepare:" name="prep">
+            <TextArea
+              placeholder="Please explain how to prepare this meal."
+              rows={6}
+            />
           </Form.Item>
           <Form.Item<Meal>
             name="ingredients"
@@ -141,23 +149,24 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
               onSearch={handleSearch}
               onSelect={handleSelect}
               value={searchValue}
-              style={{ width: 200 }}
             >
               <Input.Search placeholder="Search Ingredients" />
             </AutoComplete>
-            <div>
+            <Flex vertical>
               {selectedIngredients.map((ingredient) => (
                 <Tag
+                  className="Ingredient-Tag"
                   key={ingredient._id}
                   closable
                   onClose={() => handleDeselect(ingredient._id)}
                 >
-                  {ingredient.ingredient_description}
+                  <Typography.Text className="Ingredient-Tag-Text" ellipsis>
+                    {ingredient.ingredient_description}
+                  </Typography.Text>
                 </Tag>
               ))}
-            </div>
+            </Flex>
           </Form.Item>
-          {/* TODO: Add a "how to make desc for every meal" */}
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button className="User-Preferences-Submit" htmlType="submit">
               Submit
