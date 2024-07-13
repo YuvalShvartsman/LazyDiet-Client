@@ -32,6 +32,7 @@ export const UserProvider = ({ children }: Provider) => {
 
   const saveMeal = useCallback((meal: Meal[]) => {
     try {
+      console.log("am i kjfsdnkjfds");
       request({
         url: URLS.MEALS,
         method: "POST",

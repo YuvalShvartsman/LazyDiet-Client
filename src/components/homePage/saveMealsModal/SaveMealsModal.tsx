@@ -1,6 +1,6 @@
 import "./SaveMealsModal.css";
 
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 
 import {
   AutoComplete,
@@ -22,6 +22,7 @@ import db from "../../../axiosConfig/axiosInstance";
 
 import IdleAvocado from "/idleAvocado.gif";
 import TextArea from "antd/es/input/TextArea";
+import MealsContext from "../../../contexts/MealsContext";
 
 type SaveMealsModalProps = {
   open: boolean;
@@ -29,11 +30,15 @@ type SaveMealsModalProps = {
 };
 
 function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
+  const { saveMeal } = useContext(MealsContext);
+
   const onFinish: FormProps<Meal>["onFinish"] = (values) => {
     const mealWithIngredients = {
       ...values,
       ingredients: selectedIngredients,
     };
+    saveMeal([mealWithIngredients]);
+    handleClose();
   };
 
   const onFinishFailed: FormProps<Meal>["onFinishFailed"] = (errorInfo) => {
@@ -142,7 +147,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
           <Form.Item<Meal>
             name="ingredients"
             label="Ingredients:"
-            rules={[{ required: true, message: "Please choose ingredients!" }]}
+            // rules={[{ required: true, message: "Please choose ingredients!" }]}
           >
             <AutoComplete
               options={options}
