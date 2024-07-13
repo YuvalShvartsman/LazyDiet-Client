@@ -1,0 +1,97 @@
+.Navbar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 75px;
+  width: 100%;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  line-height: 120px;
+  background-color: var(--second-color) !important;
+  box-shadow: var(--fifth-color) 0 5px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Navbar-Logo {
+  width: 175px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  align-self: flex-start;
+  position: absolute;
+  left: 0;
+}
+
+.System-Name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.Idle-Logo {
+  height: 50px;
+  width: 50px;
+}
+
+.Navbar-Buttons {
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+}
+
+.Navbar-Button {
+  background-color: transparent;
+  font-size: 25px;
+}
+
+.Navbar-Button:hover,
+.Navbar-Button:focus {
+  background-color: transparent !important;
+  color: var(--first-color) !important;
+  border: transparent !important;
+}
+
+.Navbar-Info-Section {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  position: absolute;
+  right: 30px;
+}
+
+.User-Picture {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+}
+
+.Popover-Content {
+  align-items: center;
+}
+
+.Email-Text {
+  font-size: 14px !important;
+}
+
+.Logout-Button {
+  background-color: var(--fifth-color) !important;
+  border-color: var(--fifth-color) !important;
+  margin: 2%;
+}
+
+.Logout-Button :hover,
+.Logout-Button :focus {
+  border-color: var(--fourth-color) !important;
+  background-color: var(--fourth-color) !important;
+  color: var(--first-color) !important;
+}

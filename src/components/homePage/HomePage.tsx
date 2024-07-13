@@ -1,24 +1,33 @@
 import "./HomePage.css";
 
-import { useContext, useState } from "react";
+import { Layout } from "antd";
 
-import userContext from "../../contexts/UserContext";
-import { Button, Layout } from "antd";
-import SaveMealsModal from "./saveMealsModal/SaveMealsModal";
+import MainLayout from "../mainLayout/MainLayout";
+import MonthlyDiet from "./calendar/MonthlyDiet";
+import ProgressChart from "./progressChart/ProgressChart";
+import DailyDiet from "./dailyDiet/DailyDiet";
+
+import { useContext } from "react";
+import HomeDisplayContext from "../../contexts/HomeDisplayContext";
 
 function HomePage() {
-  const { userData } = useContext(userContext);
+  const { componentToDisplay } = useContext(HomeDisplayContext);
 
-  const [isAddMealsOpen, setIsAddMealsOpen] = useState<boolean>(false);
+  const pickComponentToDisplay = () => {
+    switch (componentToDisplay) {
+      case "DailyMenu":
+        return <DailyDiet />;
+      case "MonthlyDiet":
+        return <MonthlyDiet />;
+      case "ProgressChart":
+        return <ProgressChart />;
+    }
+  };
 
   return (
-    <Layout className="Home-Page">
-      <h1>Hello, {userData?.name}</h1>
-      <SaveMealsModal isOpen={isAddMealsOpen} setIsOpen={setIsAddMealsOpen} />
-      <Button className="Add-Meals" onClick={() => setIsAddMealsOpen(true)}>
-        Add Meals
-      </Button>
-    </Layout>
+    <MainLayout>
+      <Layout className="Home-Page">{pickComponentToDisplay()}</Layout>
+    </MainLayout>
   );
 }
 
