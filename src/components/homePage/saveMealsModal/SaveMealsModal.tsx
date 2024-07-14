@@ -30,14 +30,14 @@ type SaveMealsModalProps = {
 };
 
 function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
-  const { saveMeal } = useContext(MealsContext);
+  const { saveMeals } = useContext(MealsContext);
 
   const onFinish: FormProps<Meal>["onFinish"] = (values) => {
     const mealWithIngredients = {
       ...values,
       ingredients: selectedIngredients,
     };
-    saveMeal([mealWithIngredients]);
+    saveMeals([mealWithIngredients]);
     handleClose();
   };
 
@@ -144,11 +144,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
               rows={6}
             />
           </Form.Item>
-          <Form.Item<Meal>
-            name="ingredients"
-            label="Ingredients:"
-            // rules={[{ required: true, message: "Please choose ingredients!" }]}
-          >
+          <Form.Item<Meal> name="ingredients" label="Ingredients:">
             <AutoComplete
               options={options}
               onSearch={handleSearch}
@@ -158,10 +154,10 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
               <Input.Search placeholder="Search Ingredients" />
             </AutoComplete>
             <Flex vertical>
-              {selectedIngredients.map((ingredient) => (
+              {selectedIngredients.map((ingredient, key) => (
                 <Tag
                   className="Ingredient-Tag"
-                  key={ingredient._id}
+                  key={key}
                   closable
                   onClose={() => handleDeselect(ingredient._id)}
                 >
@@ -172,6 +168,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
               ))}
             </Flex>
           </Form.Item>
+          {/* <Form.Item<Meal> label="Ingredients List"></Form.Item> */}
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button className="User-Preferences-Submit" htmlType="submit">
               Submit

@@ -4,12 +4,12 @@ import { Meal } from "../types/Meal";
 
 type MealsContextProps = {
   usersMeals: Meal[] | undefined;
-  saveMeal: (meal: Meal[]) => void;
+  saveMeals: (meal: Meal[]) => void;
 };
 
 const initialContextValue = {
   usersMeals: undefined,
-  saveMeal: () => {},
+  saveMeals: () => {},
 };
 
 const MealsContext = createContext<MealsContextProps>(initialContextValue);
