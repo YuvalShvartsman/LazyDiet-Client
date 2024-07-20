@@ -1,7 +1,5 @@
 import "./SaveMealsModal.css";
-
 import { useCallback, useContext, useState } from "react";
-
 import {
   AutoComplete,
   Button,
@@ -13,13 +11,10 @@ import {
   Tag,
   Typography,
 } from "antd";
-
 import { Meal } from "../../../types/Meal";
 import { Ingredient } from "../../../types/Ingredient";
-
 import debounce from "lodash.debounce";
 import db from "../../../axiosConfig/axiosInstance";
-
 import IdleAvocado from "/idleAvocado.gif";
 import TextArea from "antd/es/input/TextArea";
 import MealsContext from "../../../contexts/MealsContext";
@@ -48,9 +43,14 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     []
   );
-  const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>(
-    []
-  );
+  const [selectedIngredients, setSelectedIngredients] = useState<
+    { ingredient: Ingredient; amount: number }[]
+  >([]);
+
+  console.log("options are  - ", options);
+  console.log("selectedIngredients are -", selectedIngredients);
+  console.log("");
+
   const [searchValue, setSearchValue] = useState<string>("");
 
   const fetchIngredients = async (value: string) => {
@@ -81,11 +81,13 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
     option: { value: string; label: string }
   ) => {
     const ingredient = {
-      _id: value,
-      ingredient_description: option.label,
+      ingredient: {
+        _id: value,
+        ingredient_description: option.label,
+        fdc_id: 0,
+        nurtrients: [],
+      },
       amount: 0,
-      fdc_id: 0,
-      nurtritionalValue: {},
     };
     setSelectedIngredients([...selectedIngredients, ingredient]);
     setSearchValue("");
@@ -93,7 +95,21 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
 
   const handleDeselect = (value: string) => {
     setSelectedIngredients(
-      selectedIngredients.filter((ingredient) => ingredient._id !== value)
+      selectedIngredients.filter(
+        (ingredient) => ingredient.ingredient._id !== value
+      )
+    );
+  };
+
+  const handleAmountChange = (id: string, amount: number) => {
+    console.log("🚀 ~ handleAmountChange ~ amount:", amount);
+    console.log("🚀 ~ handleAmountChange ~ id:", id);
+    setSelectedIngredients((prevIngredients) =>
+      prevIngredients.map((ingredient) =>
+        ingredient.ingredient._id === id
+          ? { ...ingredient, amount }
+          : ingredient
+      )
     );
   };
 
@@ -101,10 +117,8 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
     <Modal
       className="Add-Meal-Modal"
       open={open}
-      onClose={handleClose}
       onCancel={handleClose}
-      onOk={handleClose}
-      footer={false}
+      footer={null}
     >
       <Flex className="User-Preferences-Component">
         <Form
@@ -123,7 +137,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
             </Typography>
             <img src={IdleAvocado} className="Header-Avocado" />
           </Flex>
-          <Form.Item<Meal>
+          <Form.Item
             label="Meal Name:"
             name="mealName"
             rules={[
@@ -135,16 +149,16 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
           >
             <Input />
           </Form.Item>
-          <Form.Item<Meal> label="Meal Description:" name="description">
+          <Form.Item label="Meal Description:" name="description">
             <TextArea placeholder="Please elaborate on this meal." />
           </Form.Item>
-          <Form.Item<Meal> label="How to Prepare:" name="prep">
+          <Form.Item label="How to Prepare:" name="prep">
             <TextArea
               placeholder="Please explain how to prepare this meal."
               rows={6}
             />
           </Form.Item>
-          <Form.Item<Meal> name="ingredients" label="Ingredients:">
+          <Form.Item label="Ingredients:">
             <AutoComplete
               options={options}
               onSearch={handleSearch}
@@ -154,21 +168,32 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
               <Input.Search placeholder="Search Ingredients" />
             </AutoComplete>
             <Flex vertical>
-              {selectedIngredients.map((ingredient, key) => (
-                <Tag
-                  className="Ingredient-Tag"
-                  key={key}
-                  closable
-                  onClose={() => handleDeselect(ingredient._id)}
-                >
-                  <Typography.Text className="Ingredient-Tag-Text" ellipsis>
-                    {ingredient.ingredient_description}
-                  </Typography.Text>
-                </Tag>
+              {selectedIngredients.map((ingredient) => (
+                <Flex key={ingredient.ingredient._id} align="center">
+                  <Tag
+                    className="Ingredient-Tag"
+                    closable
+                    onClose={() => handleDeselect(ingredient.ingredient._id)}
+                  >
+                    <Typography.Text className="Ingredient-Tag-Text" ellipsis>
+                      {ingredient.ingredient.ingredient_description}
+                    </Typography.Text>
+                  </Tag>
+                  <Input
+                    placeholder="Amount (grams)"
+                    value={ingredient.amount}
+                    onChange={(e) =>
+                      handleAmountChange(
+                        ingredient.ingredient._id,
+                        Number(e.target.value)
+                      )
+                    }
+                    className="Ingredient-Amount"
+                  />
+                </Flex>
               ))}
             </Flex>
           </Form.Item>
-          {/* <Form.Item<Meal> label="Ingredients List"></Form.Item> */}
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button className="User-Preferences-Submit" htmlType="submit">
               Submit

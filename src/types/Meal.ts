@@ -4,5 +4,5 @@ export type Meal = {
   mealName: string;
   description?: string;
   prep?: string;
-  ingredients: Ingredient[];
+  ingredients: { ingredient: Ingredient; amount: number }[];
 };

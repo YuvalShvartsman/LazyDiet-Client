@@ -29,6 +29,7 @@ export const UserProvider = ({ children }: Provider) => {
     (meals: Meal[]) => {
       try {
         if (currentUser && meals) {
+          console.log("🚀 ~ UserProvider ~ meals:", meals);
           request({
             url: URLS.MEALS,
             method: "POST",

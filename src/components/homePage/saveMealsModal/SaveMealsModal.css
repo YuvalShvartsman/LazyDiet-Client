@@ -21,7 +21,7 @@
 }
 
 .Ingredient-Tag {
-  width: 100% !important;
+  width: 65% !important;
   background-color: var(--second-color);
   padding-right: 28px;
   align-items: center;
@@ -31,4 +31,7 @@
 
 .Ingredient-Tag-Text {
   font-size: 10px;
+}
+
+.Ingredient-Amount {
 }
