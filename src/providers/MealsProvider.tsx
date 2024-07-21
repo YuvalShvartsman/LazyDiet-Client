@@ -46,6 +46,7 @@ export const UserProvider = ({ children }: Provider) => {
     },
     [currentUser]
   );
+  console.log(data);
 
   return (
     <MealsContext.Provider value={{ usersMeals: data, saveMeals }}>

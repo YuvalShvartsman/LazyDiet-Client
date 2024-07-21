@@ -18,6 +18,7 @@ import db from "../../../axiosConfig/axiosInstance";
 import IdleAvocado from "/idleAvocado.gif";
 import TextArea from "antd/es/input/TextArea";
 import MealsContext from "../../../contexts/MealsContext";
+import Swal from "sweetalert2";
 
 type SaveMealsModalProps = {
   open: boolean;
@@ -28,12 +29,21 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   const { saveMeals } = useContext(MealsContext);
 
   const onFinish: FormProps<Meal>["onFinish"] = (values) => {
-    const mealWithIngredients = {
-      ...values,
-      ingredients: selectedIngredients,
-    };
-    saveMeals([mealWithIngredients]);
-    handleClose();
+    // also check if amounts are equal to zero.
+    if (selectedIngredients.length >= 0) {
+      const mealWithIngredients = {
+        ...values,
+        ingredients: selectedIngredients,
+      };
+      saveMeals([mealWithIngredients]);
+      handleClose();
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "could not save a meal without ingredients",
+        icon: "error",
+      });
+    }
   };
 
   const onFinishFailed: FormProps<Meal>["onFinishFailed"] = (errorInfo) => {
