@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { URLS } from "../axiosConfig/URLS";
 
-import { PreferencesOptions } from "../types/UserPreferences";
 import { useSendApiReq } from "./useSendApiReq";
+import { MealType } from "../types/MealType";
 
-function useGetPreferencesOptions() {
-  const { request, data } = useSendApiReq<PreferencesOptions>();
+function useGetMealTypes() {
+  const { request, data } = useSendApiReq<MealType[]>();
 
   useEffect(() => {
     (async () => {
       try {
         await request({
-          url: URLS.PREFERENCES_OPTIONS,
+          url: URLS.GET_MEAL_TYPES,
           method: "GET",
         });
       } catch (error) {
@@ -23,4 +23,4 @@ function useGetPreferencesOptions() {
   return data;
 }
 
-export default useGetPreferencesOptions;
+export default useGetMealTypes;

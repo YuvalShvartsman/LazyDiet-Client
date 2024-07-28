@@ -8,6 +8,7 @@ import {
   FormProps,
   Input,
   Modal,
+  Select,
   Tag,
   Typography,
 } from "antd";
@@ -19,6 +20,7 @@ import IdleAvocado from "/idleAvocado.gif";
 import TextArea from "antd/es/input/TextArea";
 import MealsContext from "../../../contexts/MealsContext";
 import Swal from "sweetalert2";
+import useGetMealTypes from "../../../hooks/useGetMealTypes";
 
 type SaveMealsModalProps = {
   open: boolean;
@@ -26,6 +28,11 @@ type SaveMealsModalProps = {
 };
 
 function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
+  const { Option } = Select;
+
+  const mealTypes = useGetMealTypes();
+  console.log("🚀 ~ SaveMealsModal ~ mealTypes:", mealTypes);
+
   const { saveMeals } = useContext(MealsContext);
 
   const onFinish: FormProps<Meal>["onFinish"] = (values) => {
@@ -164,6 +171,24 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
               placeholder="Please explain how to prepare this meal."
               rows={6}
             />
+          </Form.Item>
+          <Form.Item<Meal>
+            name="mealType"
+            label="when to consume"
+            valuePropName="goal"
+            rules={[{ required: true, message: "Please enter your goals!" }]}
+          >
+            <Select placeholder="Please Select your current goal" allowClear>
+              {mealTypes &&
+                mealTypes.map((mealType) => (
+                  <Option
+                    value={mealType._id}
+                    key={"mealType - " + mealType._id}
+                  >
+                    {mealType.mealType}
+                  </Option>
+                ))}
+            </Select>
           </Form.Item>
           <Form.Item label="Ingredients:">
             <AutoComplete
