@@ -29,8 +29,11 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   const { saveMeals } = useContext(MealsContext);
 
   const onFinish: FormProps<Meal>["onFinish"] = (values) => {
-    // also check if amounts are equal to zero.
-    if (selectedIngredients.length >= 0) {
+    const emptyAmounts = selectedIngredients.filter(
+      (ingredient) => ingredient.amount <= 0
+    ); // An array to validate that each ingredient is saved with an amount.
+
+    if (selectedIngredients.length > 0 && emptyAmounts.length === 0) {
       const mealWithIngredients = {
         ...values,
         ingredients: selectedIngredients,
@@ -56,10 +59,6 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   const [selectedIngredients, setSelectedIngredients] = useState<
     { ingredient: Ingredient; amount: number }[]
   >([]);
-
-  console.log("options are  - ", options);
-  console.log("selectedIngredients are -", selectedIngredients);
-  console.log("");
 
   const [searchValue, setSearchValue] = useState<string>("");
 
@@ -112,8 +111,6 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   };
 
   const handleAmountChange = (id: string, amount: number) => {
-    console.log("🚀 ~ handleAmountChange ~ amount:", amount);
-    console.log("🚀 ~ handleAmountChange ~ id:", id);
     setSelectedIngredients((prevIngredients) =>
       prevIngredients.map((ingredient) =>
         ingredient.ingredient._id === id
@@ -162,7 +159,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
           <Form.Item label="Meal Description:" name="description">
             <TextArea placeholder="Please elaborate on this meal." />
           </Form.Item>
-          <Form.Item label="How to Prepare:" name="prep">
+          <Form.Item label="Recipe:" name="prep">
             <TextArea
               placeholder="Please explain how to prepare this meal."
               rows={6}

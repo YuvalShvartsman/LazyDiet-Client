@@ -9,7 +9,7 @@ const { Panel } = Collapse;
 function DailyDiet() {
   const meals: any = [
     {
-      mealName: "3 Egged Shakshooka",
+      mealName: "Shakshuka",
       mealMacros: { protein: 20, calories: 400, carbs: 10 },
       ingredients: [
         { name: "Egg", amount: 3 },
@@ -33,7 +33,7 @@ function DailyDiet() {
       ],
     },
     {
-      mealName: "Protein Shake",
+      mealName: "Protein smoothie",
       mealMacros: { protein: 25, calories: 100, carbs: 0 },
       ingredients: [],
     },

@@ -29,7 +29,6 @@ export const UserProvider = ({ children }: Provider) => {
     (meals: Meal[]) => {
       try {
         if (currentUser && meals) {
-          console.log("🚀 ~ UserProvider ~ meals:", meals);
           request({
             url: URLS.MEALS,
             method: "POST",
@@ -46,7 +45,6 @@ export const UserProvider = ({ children }: Provider) => {
     },
     [currentUser]
   );
-  console.log(data);
 
   return (
     <MealsContext.Provider value={{ usersMeals: data, saveMeals }}>
