@@ -6,25 +6,21 @@ import { useSendApiReq } from "./useSendApiReq";
 import { Ingredient } from "../types/Ingredient";
 
 function useGetIngredientsOptions() {
-  const [ingredientsOptions, setIngredientsOptions] = useState<Ingredient[]>();
-  const { request } = useSendApiReq<Ingredient[]>();
+  const { request, data } = useSendApiReq<Ingredient[]>();
 
   useEffect(() => {
     (async () => {
       try {
-        const res = (
-          await request({
-            url: URLS.INGREDIENTS,
-            method: "GET",
-          })
-        ).data;
-        setIngredientsOptions(res);
+        await request({
+          url: URLS.INGREDIENTS,
+          method: "GET",
+        });
       } catch (error) {
         console.error("Error, could not find ingredients.", error);
       }
     })();
   }, []);
-  return ingredientsOptions;
+  return data;
 }
 
 export default useGetIngredientsOptions;

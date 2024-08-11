@@ -1,5 +1,11 @@
+import { useCallback, useContext, useState } from "react";
+
+import useGetMealTypes from "../../../hooks/useGetMealTypes";
+
+import MealsContext from "../../../contexts/MealsContext";
+
 import "./SaveMealsModal.css";
-import { useCallback, useState } from "react";
+
 import {
   AutoComplete,
   Button,
@@ -8,44 +14,71 @@ import {
   FormProps,
   Input,
   Modal,
+  Select,
   Tag,
+  Typography,
 } from "antd";
-import { Header } from "antd/es/layout/layout";
+import TextArea from "antd/es/input/TextArea";
+
 import IdleAvocado from "/idleAvocado.gif";
+
 import { Meal } from "../../../types/Meal";
 import { Ingredient } from "../../../types/Ingredient";
-import { Nutrient } from "../../../types/Nutrient";
+
 import debounce from "lodash.debounce";
+
 import db from "../../../axiosConfig/axiosInstance";
 
+import Swal from "sweetalert2";
+
 type SaveMealsModalProps = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
+  open: boolean;
+  handleClose: () => void;
 };
 
-function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
+  const { Option } = Select;
+
+  const mealTypes = useGetMealTypes();
+
+  const { saveMeals } = useContext(MealsContext);
 
   const onFinish: FormProps<Meal>["onFinish"] = (values) => {
-    const mealWithIngredients = {
-      ...values,
-      ingredients: selectedIngredients,
-    };
-    console.log(mealWithIngredients);
+    const emptyAmounts = selectedIngredients.filter(
+      (ingredient) => ingredient.amount <= 0
+    ); // An array to validate that each ingredient is saved with an amount.
+
+    if (selectedIngredients.length > 0 && emptyAmounts.length === 0) {
+      const mealWithIngredients = {
+        ...values,
+        ingredients: selectedIngredients,
+      };
+      saveMeals([mealWithIngredients]);
+      handleClose();
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: "could not save a meal without ingredients",
+        icon: "error",
+      });
+    }
   };
 
   const onFinishFailed: FormProps<Meal>["onFinishFailed"] = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    Swal.fire({
+      title: "Error",
+      text: "Could not save meal",
+      icon: "error",
+    });
   };
 
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
     []
   );
-  const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>(
-    []
-  );
+  const [selectedIngredients, setSelectedIngredients] = useState<
+    { ingredient: Ingredient; amount: number }[]
+  >([]);
+
   const [searchValue, setSearchValue] = useState<string>("");
 
   const fetchIngredients = async (value: string) => {
@@ -53,7 +86,6 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
       const response = await db.get<Ingredient[]>(
         `/ingredients/search-ingredients/${value}`
       );
-      console.log(response.data);
       setOptions(
         response.data.map((ingredient) => ({
           value: ingredient._id,
@@ -77,11 +109,13 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
     option: { value: string; label: string }
   ) => {
     const ingredient = {
-      _id: value,
-      ingredient_description: option.label,
+      ingredient: {
+        _id: value,
+        ingredient_description: option.label,
+        fdc_id: 0,
+        nurtrients: [],
+      },
       amount: 0,
-      fdc_id: 0,
-      nurtritionalValue: {},
     };
     setSelectedIngredients([...selectedIngredients, ingredient]);
     setSearchValue("");
@@ -89,14 +123,29 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
 
   const handleDeselect = (value: string) => {
     setSelectedIngredients(
-      selectedIngredients.filter((ingredient) => ingredient._id !== value)
+      selectedIngredients.filter(
+        (ingredient) => ingredient.ingredient._id !== value
+      )
+    );
+  };
+
+  const handleAmountChange = (id: string, amount: number) => {
+    setSelectedIngredients((prevIngredients) =>
+      prevIngredients.map((ingredient) =>
+        ingredient.ingredient._id === id
+          ? { ...ingredient, amount }
+          : ingredient
+      )
     );
   };
 
   return (
-    <Modal open={isOpen} onClose={handleClose}>
-      <img src={IdleAvocado} className="Idle-Avocado" />
-      <Header>Add a meal</Header>
+    <Modal
+      className="Add-Meal-Modal"
+      open={open}
+      onCancel={handleClose}
+      footer={null}
+    >
       <Flex className="User-Preferences-Component">
         <Form
           className="Create-Meal-Form"
@@ -108,8 +157,16 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
-          <Form.Item<Meal>
-            label="Meal name:"
+          <Flex className="Header">
+            <Typography className="Header-Text">
+              Add a meal to your personal menu
+            </Typography>
+
+            <img src={IdleAvocado} className="Header-Avocado" />
+          </Flex>
+
+          <Form.Item
+            label="Meal Name:"
             name="mealName"
             rules={[
               {
@@ -120,33 +177,79 @@ function SaveMealsModal({ isOpen, setIsOpen }: SaveMealsModalProps) {
           >
             <Input />
           </Form.Item>
+
+          <Form.Item label="Meal Description:" name="description">
+            <TextArea placeholder="Please elaborate on this meal." />
+          </Form.Item>
+
+          <Form.Item label="Recipe:" name="prep">
+            <TextArea
+              placeholder="Please explain how to prepare this meal."
+              rows={6}
+            />
+          </Form.Item>
+
           <Form.Item<Meal>
-            name="ingredients"
-            label="Ingredients:"
-            rules={[{ required: true, message: "Please choose ingredients!" }]}
+            name="mealType"
+            label="When should this meal be eaten?"
+            valuePropName="Meal Type"
+            rules={[
+              {
+                required: true,
+                message: "Please enter when should the meal be consumed",
+              },
+            ]}
           >
+            <Select placeholder="Please Select your current goal" allowClear>
+              {mealTypes &&
+                mealTypes.map((mealType) => (
+                  <Option
+                    value={mealType._id}
+                    key={"mealType - " + mealType._id}
+                  >
+                    {mealType.mealType}
+                  </Option>
+                ))}
+            </Select>
+          </Form.Item>
+
+          <Form.Item label="Ingredients:">
             <AutoComplete
               options={options}
               onSearch={handleSearch}
               onSelect={handleSelect}
               value={searchValue}
-              style={{ width: 200 }}
             >
               <Input.Search placeholder="Search Ingredients" />
             </AutoComplete>
-            <div>
+            <Flex vertical>
               {selectedIngredients.map((ingredient) => (
-                <Tag
-                  key={ingredient._id}
-                  closable
-                  onClose={() => handleDeselect(ingredient._id)}
-                >
-                  {ingredient.ingredient_description}
-                </Tag>
+                <Flex key={ingredient.ingredient._id} align="center">
+                  <Tag
+                    className="Ingredient-Tag"
+                    closable
+                    onClose={() => handleDeselect(ingredient.ingredient._id)}
+                  >
+                    <Typography.Text className="Ingredient-Tag-Text" ellipsis>
+                      {ingredient.ingredient.ingredient_description}
+                    </Typography.Text>
+                  </Tag>
+                  <Input
+                    placeholder="Amount (grams)"
+                    value={ingredient.amount}
+                    onChange={(e) =>
+                      handleAmountChange(
+                        ingredient.ingredient._id,
+                        Number(e.target.value)
+                      )
+                    }
+                    className="Ingredient-Amount"
+                  />
+                </Flex>
               ))}
-            </div>
+            </Flex>
           </Form.Item>
-          {/* TODO: Add a "how to make desc for every meal" */}
+
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button className="User-Preferences-Submit" htmlType="submit">
               Submit

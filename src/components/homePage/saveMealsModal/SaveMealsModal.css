@@ -1,0 +1,38 @@
+.Add-Meal-Modal .ant-modal-content {
+  background-color: var(--first-color) !important;
+}
+
+.Header {
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  margin: 20px !important;
+}
+
+.Header-Text {
+  text-align: center;
+  font-size: 18px !important;
+  color: var(--first-color);
+}
+
+.Header-Avocado {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.Ingredient-Tag {
+  width: 65% !important;
+  background-color: var(--second-color);
+  padding-right: 28px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+.Ingredient-Tag-Text {
+  font-size: 10px;
+}
+
+.Ingredient-Amount {
+  width: 35% !important;
+}

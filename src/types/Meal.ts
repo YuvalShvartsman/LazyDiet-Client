@@ -1,6 +1,11 @@
 import { Ingredient } from "./Ingredient";
 
+import { MealType } from "./MealType";
+
 export type Meal = {
   mealName: string;
-  ingredients: Ingredient[];
+  description?: string;
+  prep?: string;
+  mealType?: MealType;
+  ingredients: { ingredient: Ingredient; amount: number }[];
 };

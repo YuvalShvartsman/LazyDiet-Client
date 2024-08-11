@@ -28,4 +28,10 @@ export const URLS = {
   INGREDIENTS: "ingredients/",
 
   //INGREDIENTS --------------------------------------------------
+
+  //MEALS --------------------------------------------------
+  MEALS: "meals/",
+  GET_MEAL_TYPES: "mealTypes",
+
+  //MEALS --------------------------------------------------
 };
