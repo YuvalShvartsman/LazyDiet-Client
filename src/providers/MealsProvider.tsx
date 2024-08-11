@@ -1,15 +1,16 @@
 import { useEffect, useCallback, useContext, useState } from "react";
 
-import UserContext from "../contexts/UserContext";
-
-import { URLS } from "../axiosConfig/URLS";
 import { useSendApiReq } from "../hooks/useSendApiReq";
 
+import UserContext from "../contexts/UserContext";
+import MealsContext from "../contexts/MealsContext";
+
+import { URLS } from "../axiosConfig/URLS";
+
 import { Provider } from "../types/Provider";
+import { Meal } from "../types/Meal";
 
 import Swal from "sweetalert2";
-import { Meal } from "../types/Meal";
-import MealsContext from "../contexts/MealsContext";
 
 export const UserProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<Meal[]>();
@@ -23,7 +24,7 @@ export const UserProvider = ({ children }: Provider) => {
     if (userData) {
       setCurrentUser(userData._id);
     }
-  }, [userData]);
+  }, [userData]); // TODO: Check why didnt i just send the userData as is.
 
   const saveMeals = useCallback(
     (meals: Meal[]) => {
@@ -38,7 +39,7 @@ export const UserProvider = ({ children }: Provider) => {
       } catch (error) {
         Swal.fire({
           title: "Error!",
-          text: "Could not save your meal",
+          text: "Could not save your meal!",
           icon: "error",
         });
       }

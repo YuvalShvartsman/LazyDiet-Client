@@ -1,4 +1,5 @@
 import { Ingredient } from "./Ingredient";
+
 import { MealType } from "./MealType";
 
 export type Meal = {

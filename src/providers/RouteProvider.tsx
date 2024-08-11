@@ -2,21 +2,17 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import { QueryClient, QueryClientProvider } from "react-query";
 
-import RerouteUserProvider from "./RerouteUserProvider";
-
-import NotificationProvider from "./NotificationProvider";
-
-import UserProvider from "../providers/UserProvider";
-
 import LoadingProvider from "../providers/LoadingProvider";
-
+import NotificationProvider from "./NotificationProvider";
 import UserPreferencesProvider from "../providers/UserPreferencesProvider";
+import UserProvider from "../providers/UserProvider";
+import MealsProvider from "./MealsProvider";
+import HomeDisplayProvider from "./HomeDisplayProvider";
+import RerouteUserProvider from "./RerouteUserProvider";
 
 import Login from "../components/login/Login";
 import UserPreferences from "../components/userPreferences/UserPreferences";
 import HomePage from "../components/homePage/HomePage";
-import HomeDisplayProvider from "./HomeDisplayProvider";
-import MealsProvider from "./MealsProvider";
 
 function RouteProvider() {
   const qClient = new QueryClient();

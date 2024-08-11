@@ -1,5 +1,11 @@
-import "./SaveMealsModal.css";
 import { useCallback, useContext, useState } from "react";
+
+import useGetMealTypes from "../../../hooks/useGetMealTypes";
+
+import MealsContext from "../../../contexts/MealsContext";
+
+import "./SaveMealsModal.css";
+
 import {
   AutoComplete,
   Button,
@@ -12,15 +18,18 @@ import {
   Tag,
   Typography,
 } from "antd";
+import TextArea from "antd/es/input/TextArea";
+
+import IdleAvocado from "/idleAvocado.gif";
+
 import { Meal } from "../../../types/Meal";
 import { Ingredient } from "../../../types/Ingredient";
+
 import debounce from "lodash.debounce";
+
 import db from "../../../axiosConfig/axiosInstance";
-import IdleAvocado from "/idleAvocado.gif";
-import TextArea from "antd/es/input/TextArea";
-import MealsContext from "../../../contexts/MealsContext";
+
 import Swal from "sweetalert2";
-import useGetMealTypes from "../../../hooks/useGetMealTypes";
 
 type SaveMealsModalProps = {
   open: boolean;
@@ -31,7 +40,6 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   const { Option } = Select;
 
   const mealTypes = useGetMealTypes();
-  console.log("🚀 ~ SaveMealsModal ~ mealTypes:", mealTypes);
 
   const { saveMeals } = useContext(MealsContext);
 
@@ -57,7 +65,11 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   };
 
   const onFinishFailed: FormProps<Meal>["onFinishFailed"] = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    Swal.fire({
+      title: "Error",
+      text: "Could not save meal",
+      icon: "error",
+    });
   };
 
   const [options, setOptions] = useState<{ value: string; label: string }[]>(
@@ -149,8 +161,10 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
             <Typography className="Header-Text">
               Add a meal to your personal menu
             </Typography>
+
             <img src={IdleAvocado} className="Header-Avocado" />
           </Flex>
+
           <Form.Item
             label="Meal Name:"
             name="mealName"
@@ -163,20 +177,28 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
           >
             <Input />
           </Form.Item>
+
           <Form.Item label="Meal Description:" name="description">
             <TextArea placeholder="Please elaborate on this meal." />
           </Form.Item>
+
           <Form.Item label="Recipe:" name="prep">
             <TextArea
               placeholder="Please explain how to prepare this meal."
               rows={6}
             />
           </Form.Item>
+
           <Form.Item<Meal>
             name="mealType"
-            label="when to consume"
-            valuePropName="goal"
-            rules={[{ required: true, message: "Please enter your goals!" }]}
+            label="When should this meal be eaten?"
+            valuePropName="Meal Type"
+            rules={[
+              {
+                required: true,
+                message: "Please enter when should the meal be consumed",
+              },
+            ]}
           >
             <Select placeholder="Please Select your current goal" allowClear>
               {mealTypes &&
@@ -190,6 +212,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
                 ))}
             </Select>
           </Form.Item>
+
           <Form.Item label="Ingredients:">
             <AutoComplete
               options={options}
@@ -226,6 +249,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
               ))}
             </Flex>
           </Form.Item>
+
           <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
             <Button className="User-Preferences-Submit" htmlType="submit">
               Submit
