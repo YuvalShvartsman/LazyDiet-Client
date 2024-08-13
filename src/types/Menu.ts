@@ -1,7 +1,13 @@
-export type Menu = {};
+import { Meal } from "./Meal";
+import { MealType } from "./MealType";
+
+export type Menu = {
+  macros: string[];
+  meals: { mealType: MealType; meal: Meal }[];
+};
 
 export type MonthlyMenu = {
   userId: string;
   month: string;
-  dailyMenus: Menu[];
+  dailyMenus: { day: string; menu: Menu }[];
 };

@@ -13,6 +13,7 @@ import RerouteUserProvider from "./RerouteUserProvider";
 import Login from "../components/login/Login";
 import UserPreferences from "../components/userPreferences/UserPreferences";
 import HomePage from "../components/homePage/HomePage";
+import MenuProvider from "./MenuProvider";
 
 function RouteProvider() {
   const qClient = new QueryClient();
@@ -24,18 +25,20 @@ function RouteProvider() {
             <UserPreferencesProvider>
               <UserProvider>
                 <MealsProvider>
-                  <HomeDisplayProvider>
-                    <RerouteUserProvider>
-                      <Routes>
-                        <Route path="/" element={<HomePage />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route
-                          path="/userPreferences"
-                          element={<UserPreferences />}
-                        />
-                      </Routes>
-                    </RerouteUserProvider>
-                  </HomeDisplayProvider>
+                  <MenuProvider>
+                    <HomeDisplayProvider>
+                      <RerouteUserProvider>
+                        <Routes>
+                          <Route path="/" element={<HomePage />} />
+                          <Route path="/login" element={<Login />} />
+                          <Route
+                            path="/userPreferences"
+                            element={<UserPreferences />}
+                          />
+                        </Routes>
+                      </RerouteUserProvider>
+                    </HomeDisplayProvider>
+                  </MenuProvider>
                 </MealsProvider>
               </UserProvider>
             </UserPreferencesProvider>
