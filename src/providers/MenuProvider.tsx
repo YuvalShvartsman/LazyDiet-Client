@@ -11,20 +11,19 @@ import { Provider } from "../types/Provider";
 import { MonthlyMenu } from "../types/Menu";
 
 import Swal from "sweetalert2";
+import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
 export const MenuProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<MonthlyMenu>();
   const { userData } = useContext(UserContext);
+  const { userPreferences } = useContext(UserPreferencesContext);
 
   let [currentUser, setCurrentUser] = useState<string>();
 
   useEffect(() => {
-    if (userData) {
-      setCurrentUser(userData._id);
-    }
-    const getMonthlyMenu = () => {
+    (() => {
       try {
-        if (currentUser) {
+        if (userData && userPreferences) {
           request({
             url: URLS.MENU,
             method: "GET",
@@ -37,9 +36,8 @@ export const MenuProvider = ({ children }: Provider) => {
           icon: "error",
         });
       }
-    };
-    getMonthlyMenu();
-  }, [userData]); // TODO: Check why didnt i just send the userData as is.
+    })();
+  }, [userData, userPreferences]);
 
   return (
     <MenuContext.Provider
