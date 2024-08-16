@@ -1,6 +1,5 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 
-import UserContext from "../contexts/UserContext";
 import MenuContext from "../contexts/MenuContext";
 
 import { useSendApiReq } from "../hooks/useSendApiReq";
@@ -15,18 +14,17 @@ import UserPreferencesContext from "../contexts/UserPreferencesContext";
 
 export const MenuProvider = ({ children }: Provider) => {
   const { request, data } = useSendApiReq<MonthlyMenu>();
-  const { userData } = useContext(UserContext);
-  const { userPreferences } = useContext(UserPreferencesContext);
 
-  let [currentUser, setCurrentUser] = useState<string>();
+  const { userPreferences } = useContext(UserPreferencesContext);
 
   useEffect(() => {
     (() => {
       try {
-        if (userData && userPreferences) {
+        if (userPreferences) {
           request({
             url: URLS.MENU,
-            method: "GET",
+            method: "POST",
+            data: userPreferences,
           });
         }
       } catch (error) {
@@ -37,7 +35,7 @@ export const MenuProvider = ({ children }: Provider) => {
         });
       }
     })();
-  }, [userData, userPreferences]);
+  }, [userPreferences]);
 
   return (
     <MenuContext.Provider

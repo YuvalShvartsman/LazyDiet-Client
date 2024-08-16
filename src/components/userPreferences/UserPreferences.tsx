@@ -18,6 +18,7 @@ type UserPreferencesProps = {
 
 function UserPreferences({ handleClose }: UserPreferencesProps) {
   const { Option } = Select;
+
   const { userData } = useContext(UserContext);
   const { updateUserPreferences, userPreferences } = useContext(
     UserPreferencesContext

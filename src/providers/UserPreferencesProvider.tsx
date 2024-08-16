@@ -55,25 +55,27 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
     }
   };
 
-  const updateUserPreferences = useCallback(
-    (userId: string, userPreferences: UserPreferencesType) => {
-      try {
-        setUserPreferencesCookies(userPreferences);
-        request({
-          url: URLS.USER_PREFERENCES,
-          method: "POST",
-          data: { userPreferences, userId },
-        });
-      } catch (error) {
-        Swal.fire({
-          title: "Error!",
-          text: "Could not save your data",
-          icon: "error",
-        });
-      }
-    },
-    []
-  );
+  const updateUserPreferences = (
+    userId: string,
+    userPreferences: UserPreferencesType
+  ) => {
+    try {
+      setUserPreferencesCookies(userPreferences);
+      request({
+        url: URLS.USER_PREFERENCES,
+        method: "POST",
+        data: { userPreferences, userId },
+      });
+    } catch (error) {
+      Swal.fire({
+        title: "Error!",
+        text: "Could not save your data",
+        icon: "error",
+      });
+    }
+  };
+
+  console.log(data);
 
   return (
     <UserPreferencesContext.Provider
