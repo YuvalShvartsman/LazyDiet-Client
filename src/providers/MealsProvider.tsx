@@ -1,91 +1,57 @@
-import { useCallback, useContext, useEffect } from "react";
+import { useEffect, useCallback, useContext, useState } from "react";
 
-import UserPreferencesContext from "../contexts/UserPreferencesContext";
-
-import { URLS } from "../axiosConfig/URLS";
 import { useSendApiReq } from "../hooks/useSendApiReq";
 
-import { UserPreferencesType } from "../types/UserPreferences";
+import UserContext from "../contexts/UserContext";
+import MealsContext from "../contexts/MealsContext";
+
+import { URLS } from "../axiosConfig/URLS";
+
 import { Provider } from "../types/Provider";
+import { Meal } from "../types/Meal";
 
-import Cookies from "js-cookie";
 import Swal from "sweetalert2";
-import { jwtDecode } from "jwt-decode";
 
-type DecodedToken = {
-  userId: string;
-};
+export const MealsProvider = ({ children }: Provider) => {
+  const { request, data } = useSendApiReq<Meal[]>();
+  const { userData } = useContext(UserContext);
 
-export const UserPreferencesProvider = ({ children }: Provider) => {
-  const { request, data } = useSendApiReq<UserPreferencesType>();
+  let [currentUser, setCurrentUser] = useState<string>();
+
+  const [usersMeals, setUsersMeals] = useState<Meal[]>();
 
   useEffect(() => {
-    const userToken = Cookies.get("userToken");
-    if (userToken) {
-      getUserPreferences(userToken);
+    if (userData) {
+      setCurrentUser(userData._id);
     }
-  }, []);
+  }, [userData]); // TODO: Check why didnt i just send the userData as is.
 
-  const setUserPreferencesCookies = (userPreferences: UserPreferencesType) => {
-    Cookies.set("userPreferences", JSON.stringify(userPreferences), {
-      expires: 1,
-      sameSite: "Strict",
-    });
-  };
-
-  const getUserPreferences = async (token: string) => {
-    try {
-      const decodedToken: DecodedToken = jwtDecode(token);
-      const userId = decodedToken.userId;
-      if (userId) {
-        const res = (
-          await request({
-            url: URLS.GET_USER_PREFERENCES + userId,
-            method: "GET",
-          })
-        ).data;
-        if (res) setUserPreferencesCookies(res);
-      }
-    } catch (error) {
-      Swal.fire({
-        title: "Error!",
-        text: "Could not retrieve your data",
-        icon: "error",
-      });
-    }
-  };
-
-  const updateUserPreferences = useCallback(
-    (userId: string, userPreferences: UserPreferencesType) => {
+  const saveMeals = useCallback(
+    (meals: Meal[]) => {
       try {
-        setUserPreferencesCookies(userPreferences);
-        request({
-          url: URLS.USER_PREFERENCES,
-          method: "POST",
-          data: { userPreferences, userId },
-        });
+        if (currentUser && meals) {
+          request({
+            url: URLS.MEALS,
+            method: "POST",
+            data: { meals, userId: currentUser },
+          });
+        }
       } catch (error) {
         Swal.fire({
           title: "Error!",
-          text: "Could not save your data",
+          text: "Could not save your meal!",
           icon: "error",
         });
       }
     },
-    []
+    [currentUser]
   );
 
   return (
-    <UserPreferencesContext.Provider
-      value={{
-        userPreferences: data,
-        updateUserPreferences,
-        getUserPreferences,
-      }}
-    >
+    <MealsContext.Provider value={{ usersMeals: data, saveMeals }}>
       {children}
-    </UserPreferencesContext.Provider>
+    </MealsContext.Provider>
   );
 };
 
-export default UserPreferencesProvider;
+export default MealsProvider;

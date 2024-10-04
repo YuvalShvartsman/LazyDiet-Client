@@ -38,6 +38,7 @@ type SaveMealsModalProps = {
 
 function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
   const { Option } = Select;
+  const [form] = Form.useForm();
 
   const mealTypes = useGetMealTypes();
 
@@ -53,7 +54,11 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
         ...values,
         ingredients: selectedIngredients,
       };
+      console.log("I finished");
       saveMeals([mealWithIngredients]);
+
+      form.resetFields(); // Reset the form fields
+      setSelectedIngredients([]); // Clear selected ingredients
       handleClose();
     } else {
       Swal.fire({
@@ -156,6 +161,7 @@ function SaveMealsModal({ open, handleClose }: SaveMealsModalProps) {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
+          form={form}
         >
           <Flex className="Header">
             <Typography className="Header-Text">

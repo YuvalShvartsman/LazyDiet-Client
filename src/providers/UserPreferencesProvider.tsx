@@ -75,8 +75,6 @@ export const UserPreferencesProvider = ({ children }: Provider) => {
     }
   };
 
-  console.log(data);
-
   return (
     <UserPreferencesContext.Provider
       value={{
